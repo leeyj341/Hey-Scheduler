@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/shed_profile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/chat_img"
+        android:adjustViewBounds="true"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:maxWidth="100dp"
+        android:maxHeight="100dp"
+        android:layout_weight="1"
+        android:layout_gravity="left"
+        android:src="@drawable/user"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_weight="4">
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="채팅방 이름"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:layout_weight="1"/>
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="마지막 채팅 내용"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical"
+        android:layout_weight="10">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="00:00"
+            android:layout_weight="1"/>
+        <TextView
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@color/colorAccent"
+            android:text="10"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</LinearLayout>
