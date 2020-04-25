@@ -16,7 +16,7 @@
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="413dp"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -52,6 +52,7 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:background="#FFFFFF"
         app:elevation="40dp"
         android:clipToPadding="false"/>
