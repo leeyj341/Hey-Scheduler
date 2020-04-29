@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp">
+    <ImageView
+        android:id="@+id/map_route_icon2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:maxWidth="80dp"
+        android:maxHeight="80dp"
+        android:minWidth="80dp"
+        android:minHeight="80dp"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:src="@drawable/bus" />
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/map_route_instruction2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="지하철 2호선 탑승 후\n3정거장 이동" />
+
+        <TextView
+            android:id="@+id/map_route_duration2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="6분 소요" />
+        <TextView
+            android:id="@+id/map_route_distance2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="15 km 이동" />
+        <TextView
+            android:id="@+id/map_route_endStop"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:text="강남역 하차" />
+    </LinearLayout>
+
+</LinearLayout>

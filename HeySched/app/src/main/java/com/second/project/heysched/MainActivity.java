@@ -25,10 +25,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
                 intent.putExtra("mode", "transit");
+                //일정정보에서 일정 시작 시간 받아야 함
                 startActivity(intent);
             }
         });
-        button2.setOnClickListener(new View.OnClickListener() {
+        /*button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, MapActivity.class);
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("mode", "Driving");
                 startActivity(intent);
             }
-        });
+        });*/
 
 
     }

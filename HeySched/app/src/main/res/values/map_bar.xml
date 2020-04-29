@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="map_bar_walk" type="id"/>
+    <item name="map_bar_bus" type="id"/>
+    <item name="map_bar_subway" type="id"/>
+</resources>
