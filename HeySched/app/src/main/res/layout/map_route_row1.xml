@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/map_route_icon1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:layout_gravity="center"
+        android:src="@drawable/footprint" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/map_route_instruction1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:text="도보로 이동" />
+
+        <TextView
+            android:id="@+id/map_route_duration1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="16분 소요" />
+        <TextView
+            android:id="@+id/map_route_distance1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:text="0.3 km 이동" />
+    </LinearLayout>
+</LinearLayout>
