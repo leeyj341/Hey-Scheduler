@@ -1,4 +1,4 @@
-package exam.day03.view.heysched;
+package com.second.project.heysched;
 
 import android.content.Context;
 
