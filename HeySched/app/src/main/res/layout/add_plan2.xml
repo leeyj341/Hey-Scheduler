@@ -41,10 +41,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:layout_margin="20dp"
         >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/start"
+            android:gravity="center_vertical"
+            android:textSize="20dp"/>
 
         <EditText
             android:id="@+id/plan_start_date"
@@ -52,7 +58,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/startdate"
             android:cursorVisible="false"
             android:textSize="20dp"
             />
@@ -63,10 +68,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/starttime"
-            android:inputType="textPersonName"
-            android:textSize="20dp"
-            android:cursorVisible="false"/>
+            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -77,6 +79,13 @@
         android:layout_margin="20dp"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/end"
+            android:gravity="center_vertical"
+            android:textSize="20dp"/>
+
         <EditText
             android:id="@+id/plan_end_date"
             android:layout_width="match_parent"
@@ -84,9 +93,7 @@
             android:layout_weight="1"
             android:cursorVisible="false"
             android:ems="10"
-            android:hint="@string/enddate"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <EditText
             android:id="@+id/plan_end_time"
@@ -94,10 +101,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="@string/endtime"
-            android:inputType="textPersonName"
-            android:textSize="20dp"
-            android:cursorVisible="false"/>
+            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
