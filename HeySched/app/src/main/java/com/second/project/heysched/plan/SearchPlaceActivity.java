@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -19,10 +20,12 @@ import com.second.project.heysched.plan.adapter.SearchPlaceAdapter;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class SearchPlaceActivity extends AppCompatActivity implements View.OnClickListener {
@@ -60,6 +63,7 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
                 //Enter key Action
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     //Enter키눌렀을떄 처리
+                    Log.d("jsoup","enter works");
                     search();
                     return true;
                 }
@@ -94,6 +98,7 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void search(){
+        Log.d("jsoup","search method works");
         String search_words = search_view.getText().toString();
         Toast.makeText(this, "검색어 : "+search_words, Toast.LENGTH_SHORT).show();
         search_words = search_words.replace(" ","+");
@@ -112,13 +117,9 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
 
         @Override
         protected Void doInBackground(Void... voids) {
-            try {
-                Document doc = Jsoup.connect(crawlURL).get();
-
-                Elements titles = doc.select("");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            Log.d("jsoup","doInBackground");
+            placeCrawling();
+            Log.d("jsoup","finish");
             return null;
         }
 
@@ -131,6 +132,59 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
         protected void onCancelled() {
             super.onCancelled();
         }
+    }
+
+    private void placeCrawling(){
+        try {
+
+            Document doc = Jsoup.connect(crawlURL).get();
+
+            // place - title
+            Elements places = doc.select("a.name");
+            for(Element e:places){
+                Log.d("jsoup","\n=========place========");
+                // 장소명
+                String title = e.attr("title");
+
+                // 네이버 상세정보 url
+                String innerURL = e.attr("href");
+                Log.d("jsoup","title"+title+"innerURL : "+innerURL);
+
+                Document innerdoc = Jsoup.connect(innerURL).get();
+
+                Elements element2 = innerdoc.select("ul.list_address");
+
+                for(Element e1 : element2){
+                    Elements e2 =e1.select("span.addr");
+                    String addr = e2.text();
+                    Log.d("jsoup","addr : "+addr);
+                }
+
+                Log.d("jsoup", "=========================");
+
+            }
+
+            Elements maps = doc.select("dl.info_area");
+
+            for(Element map:maps){
+                Elements e1 = map.select("a.tit");
+
+                String title = e1.attr("title");
+                Elements e2 = map.select("span.ad_txt");
+                String location = e2.attr("title");
+                Log.d("jsoup", "title : "+ title+ "\tlocation:"+location);
+                //Document innerdoc = Jsoup.connect(innerURL).get();
+
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void setItem(){
+
     }
 
 

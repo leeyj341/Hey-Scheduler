@@ -18,9 +18,11 @@
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".plan.AddPlanActivity" />
+        <activity android:name=".plan.AddPlanActivity" >
+
+        </activity>
         <activity android:name=".map.MapActivity" />
-        <activity android:name=".ChatActivity" />
+        <activity android:name=".chat.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,11 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".plan.AddPlanActivity" />
-        <activity android:name=".map.MapActivity" />
-        <activity android:name=".chat.ChatActivity" />
-        <activity android:name=".plan.SearchPlaceActivity" />
-
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDwq0H7Y1eKw3ZBxw-x85Xzvew4WQmA8aM" />
