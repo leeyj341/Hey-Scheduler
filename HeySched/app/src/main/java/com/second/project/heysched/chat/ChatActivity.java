@@ -1,8 +1,11 @@
-package com.second.project.heysched;
+package com.second.project.heysched.chat;
+
+import android.content.Intent;
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.second.project.heysched.R;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -10,5 +13,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chat);
+
+        Intent intent = getIntent();
     }
 }
