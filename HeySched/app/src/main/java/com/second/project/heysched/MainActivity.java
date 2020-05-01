@@ -2,49 +2,84 @@ package com.second.project.heysched;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
-import com.second.project.heysched.dbtest.DBTestActivity;
-import com.second.project.heysched.map.MapActivity;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
+import com.second.project.heysched.chat.ChatActivity;
+import com.second.project.heysched.fragment.main.DetailCalendarFragment;
+import com.second.project.heysched.fragment.main.MainCalendarFragment;
 
 public class MainActivity extends AppCompatActivity {
+    static final int ACTIVITY_CHAT = 11;
+
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
+    BottomNavigationView bottomNavigationView;
+
+    MainCalendarFragment mainCalendarFragment;
+    DetailCalendarFragment detailCalendarFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.test_map);
-
-        Button button1 = findViewById(R.id.find_way_transit);
-        Button button2 = findViewById(R.id.find_way_walk);
-
-        button1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                intent.putExtra("mode", "transit");
-                //일정정보에서 일정 시작 시간 받아야 함
-                startActivity(intent);
-            }
-        });
-        button2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, DBTestActivity.class);
-                startActivity(intent);
-            }
-        });
-        /*button3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapActivity.class);
-                intent.putExtra("mode", "Driving");
-                startActivity(intent);
-            }
-        });*/
-
-
+        setContentView(R.layout.activity_main);
+        setViews();
+        selectActivity();
+        selectFragment();
     }
+
+    public void setViews() {
+        drawerLayout = findViewById(R.id.main_drawer);
+        navigationView = findViewById(R.id.main_drawer_nav);
+        bottomNavigationView = findViewById(R.id.main_bottom_nav);
+
+        mainCalendarFragment = new MainCalendarFragment();
+        detailCalendarFragment = new DetailCalendarFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.calendar_fragment, mainCalendarFragment).commit();
+    }
+
+    public void selectActivity() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Intent intent = null;
+                switch (id) {
+                    case R.id.drawer_menu_chat:
+                        intent = new Intent(MainActivity.this, ChatActivity.class);
+                        startActivityForResult(intent, ACTIVITY_CHAT);
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
+    public void selectFragment() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+                switch (id) {
+                    case R.id.calendar_main:
+                        item.setChecked(true);
+                        transaction.replace(R.id.calendar_fragment, mainCalendarFragment).commit();
+                        break;
+                    case R.id.calendar_detail:
+                        item.setChecked(true);
+                        transaction.replace(R.id.calendar_fragment, detailCalendarFragment).commit();
+                        break;
+                }
+                return false;
+            }
+        });
+    }
+
 }

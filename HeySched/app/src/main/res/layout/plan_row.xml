@@ -6,9 +6,12 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/plan_color"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:maxWidth="50dp"
+        android:maxHeight="50dp"
         android:tint="#0066FF"
         app:srcCompat="@android:drawable/ic_notification_overlay" />
 
@@ -19,7 +22,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/plan_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="3"
@@ -27,7 +30,7 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/plan_"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
