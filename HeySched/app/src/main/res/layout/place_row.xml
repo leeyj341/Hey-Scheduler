@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/place_item_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/place_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="세상의 모든 아침"
         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
     <TextView
-        android:id="@+id/location"
+        android:id="@+id/place_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="서울 영등포구 여의대로 24 " />
 
     <TextView
-        android:id="@+id/location2"
+        android:id="@+id/place_hash"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="#여의도#브런치#예쁜 " />

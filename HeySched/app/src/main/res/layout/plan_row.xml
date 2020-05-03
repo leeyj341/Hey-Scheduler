@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/shed_profile"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/plan_color"
@@ -27,7 +28,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="3"
             android:text="TextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textSize="24dp" />
 
         <TextView
             android:id="@+id/plan_"

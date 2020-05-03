@@ -146,13 +146,16 @@
             android:text="Button" />
     </LinearLayout>
 
-    <TextView
-        android:layout_margin="20dp"
-        android:id="@+id/plan_content"
+    <EditText
+        android:id="@+id/memo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="10"
-        android:text="TextView" />
+        android:layout_margin="20dp"
+        android:layout_weight="1"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        android:hint="메모"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

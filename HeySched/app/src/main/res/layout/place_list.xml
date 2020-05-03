@@ -8,22 +8,26 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/search_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="Name" />
+            android:hint="Search"
+            android:textSize="25dp"/>
 
         <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="40dp"
-            android:layout_height="50dp"
-            app:srcCompat="?android:attr/actionModeWebSearchDrawable" />
+            android:id="@+id/search_btn"
+            android:layout_width="30dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="5dp"
+            app:srcCompat="@drawable/ic_search_solid" />
     </FrameLayout>
 
     <FrameLayout
@@ -33,9 +37,11 @@
         android:layout_weight="1">
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/place_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -57,7 +63,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView5"
+                        android:id="@+id/thumbs"
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         app:srcCompat="@drawable/ic_thumbs_up_solid" />
@@ -81,20 +87,20 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/recommand_place_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="세상의 모든 아침"
                         android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
                     <TextView
-                        android:id="@+id/location3"
+                        android:id="@+id/recommand_place_location"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="서울 영등포구 여의대로 24 " />
 
                     <TextView
-                        android:id="@+id/location4"
+                        android:id="@+id/recommand_place_hash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="#여의도#브런치#예쁜 " />
