@@ -174,7 +174,6 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 Response response = client.newCall(request).execute();
                 result = response.body().string();
                 JSONArray array = new JSONArray(result);
-                Log.d("test", "json : " + array.length());
 
                 int dayCount = 0;
                 int curDay = 1;
@@ -222,14 +221,24 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
             super.onPostExecute(calendarDays);
 
             //List<Integer> colorList = new ArrayList<Integer>();
-            Log.d("test", calendarDays.size()+"");
-            Log.d("test", colorList.size()+"");
-            /*for (int i = 0; i < calendarDays.size(); i++) {
-                Log.d("test", colors[i % 3] + "");
-                colorList.add(colors[i % 3]);
-            }*/
+            int curDay = calendarDays.get(0).getDay();
+            ArrayList<Integer> newColorList = new ArrayList<Integer>();
+            ArrayList<CalendarDay> newDayList = new ArrayList<CalendarDay>();
+            for (int i = 0; i < calendarDays.size(); i++) {
+                if(curDay != calendarDays.get(i).getDay()) {
+                    /*Log.d("test", newColorList.size()+"");
+                    Log.d("test", newDayList.size()+"");
+                    Log.d("test", i +"번째");*/
+                    materialCalendarView.addDecorator(new EventDecorator(getActivity(), newColorList, newDayList));
+                    newColorList = new ArrayList<Integer>();
+                    newDayList = new ArrayList<CalendarDay>();
+                    curDay = calendarDays.get(i).getDay();
+                }
+                newColorList.add(colorList.get(i));
+                newDayList.add(calendarDays.get(i));
+            }
+            materialCalendarView.addDecorator(new EventDecorator(getActivity(), newColorList, newDayList));
 
-            materialCalendarView.addDecorator(new EventDecorator(getActivity(), colorList, calendarDays));
         }
     }
 }
