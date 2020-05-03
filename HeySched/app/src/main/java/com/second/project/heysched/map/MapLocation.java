@@ -2,16 +2,16 @@ package com.second.project.heysched.map;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
-import android.os.Bundle;
-import android.util.Log;
 
-import com.google.android.gms.maps.CameraUpdate;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.model.LatLng;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MapLocation {
     Context context;
@@ -42,5 +42,18 @@ public class MapLocation {
         }
 
         return null;
+    }
+
+    public LatLng getLatLngFromAddress(String address) {
+        Geocoder geocoder = new Geocoder(context);
+        List<Address> list = null;
+        try {
+            list = geocoder.getFromLocationName(address, 10);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return new LatLng(list.get(0).getLatitude(), list.get(0).getLongitude());
+
     }
 }

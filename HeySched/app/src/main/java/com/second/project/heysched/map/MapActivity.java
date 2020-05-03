@@ -1,26 +1,21 @@
 package com.second.project.heysched.map;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.os.AsyncTask;
+import android.os.Build;
+import android.os.Bundle;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
-import android.media.Image;
-import android.os.AsyncTask;
-import android.os.Build;
-import android.os.Bundle;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,7 +23,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.second.project.heysched.R;
@@ -79,7 +73,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         Date currentTime = Calendar.getInstance().getTime();
         arrivalTime = currentTime.getTime() / 1000;
-        Log.d("test", arrivalTime + "");
 
         checkPermissions(permission_list);
     }
@@ -161,6 +154,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         protected JSONObject doInBackground(Void... voids) {
             if(mapLocation == null )
                 mapLocation = new MapLocation(MapActivity.this, permission_list);
+            //Log.d("test", mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898") + "");
             String path = getPath(mapLocation.getMyLocation(), new LatLng(37.3027264,127.0065257), arrivalTime);
             BufferedReader in = null;
             StringBuffer sb = null;
@@ -179,7 +173,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                         data = data.replaceAll("(^\\p{Z}+|\\p{Z}+$)", "");
                         sb.append(data);
                     }
-                    Log.d("test",sb.toString());
+                    //
                     json = new JSONObject(sb.toString());
 
                     in.close();
@@ -201,7 +195,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 JSONArray legs = json.getJSONArray("routes")
                         .getJSONObject(0)
                         .getJSONArray("legs");
-                Log.d("test1", legs.toString());
+                //Log.d("test1", legs.toString());
                 JSONObject overview_polyline = json.getJSONArray("routes")
                         .getJSONObject(0)
                         .getJSONObject("overview_polyline");
@@ -252,7 +246,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 int allTime = legs.getJSONObject(0).getJSONObject("duration").getInt("value");
                 JSONArray steps = legs.getJSONObject(0).getJSONArray("steps");
                 //adpterItem 리스트에 아이템 추가
-                Log.d("test", steps.length() + "개");
                 for (int i = 0; i < steps.length(); i++) {
                     String distance = steps.getJSONObject(i).getJSONObject("distance").getString("text");
                     String timeString = steps.getJSONObject(i).getJSONObject("duration").getString("text");
@@ -264,7 +257,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                     int stops = 0;
                     String start_stop = "";
                     String end_stop = "";
-                    Log.d("test", distance);
                     if(mode.equals("TRANSIT")) {
                         detailMode = steps.getJSONObject(i).getJSONObject("transit_details")
                                 .getJSONObject("line").getJSONObject("vehicle").getString("type");
@@ -310,9 +302,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 }
 
                 //RecyclerView Adapter 설정
-                for (MapRouteItem item : wayDataList) {
+                /*for (MapRouteItem item : wayDataList) {
                     Log.d("test", item.toString());
-                }
+                }*/
                 setAdapter();
             } catch (JSONException e) {
                 e.printStackTrace();

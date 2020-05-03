@@ -23,9 +23,7 @@ public class MemberController {
 		ObjectMapper mapper = new ObjectMapper();
 		MemberVO member = null;
 		try {
-			System.out.println(memberInfo);
 			member = mapper.readValue(memberInfo, MemberVO.class);
-			System.out.println(member);
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

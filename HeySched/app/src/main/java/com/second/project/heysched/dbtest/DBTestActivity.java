@@ -83,7 +83,7 @@ public class DBTestActivity extends AppCompatActivity {
                             .build();
 
                     Response response = client.newCall(request).execute();
-                    result = response.body().toString();
+                    result = response.body().string();
                     Log.d("test", result);
 
                 } catch (JSONException e) {
