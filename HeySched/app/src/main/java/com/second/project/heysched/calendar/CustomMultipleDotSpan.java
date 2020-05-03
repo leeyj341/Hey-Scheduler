@@ -23,15 +23,16 @@ public class CustomMultipleDotSpan implements LineBackgroundSpan {
 
     @Override
     public void drawBackground(@NonNull Canvas canvas, @NonNull Paint paint, int left, int right, int top, int baseline, int bottom, @NonNull CharSequence text, int start, int end, int lineNumber) {
-        int total = colors.size() > 2 ? 3 : colors.size();
+        int total = colors.size();
         int leftMost = (total - 1) * 12;
 
         for (int i = 0; i < total; i++) {
+            int oldColor = paint.getColor();
             if(colors.get(i) != 0) {
-                //paint.setColor(Color.CYAN);
                 paint.setColor(colors.get(i));
             }
             canvas.drawCircle((left + right) / 2 - (float)leftMost, bottom + radius, radius, paint);
+            paint.setColor(oldColor);
             leftMost -= 24;
         }
     }
