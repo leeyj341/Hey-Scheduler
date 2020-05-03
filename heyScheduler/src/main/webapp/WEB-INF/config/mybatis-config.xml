@@ -11,9 +11,11 @@
 	
 	<typeAliases>
 		<typeAlias type="com.project.heyScheduler.member.MemberVO" alias="member"/>
+		<typeAlias type="com.project.heyScheduler.calendar.PlanVO" alias="plan"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mapper/member.xml"/>
+		<mapper resource="mapper/calendar.xml"/>
 	</mappers>
   </configuration>
