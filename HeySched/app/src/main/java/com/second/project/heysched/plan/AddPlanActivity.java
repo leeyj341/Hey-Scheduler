@@ -1,5 +1,6 @@
 package com.second.project.heysched.plan;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -25,6 +26,7 @@ import android.widget.Toast;
 
 
 import com.second.project.heysched.R;
+import com.second.project.heysched.plan.adapter.SearchPlaceAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -32,6 +34,7 @@ import java.util.Calendar;
 import petrov.kristiyan.colorpicker.ColorPicker;
 
 public class AddPlanActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+    // views
     EditText plan_title;
     ImageView color_picker;
     EditText plan_start_date;
@@ -44,6 +47,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     Button find_friend;
     TextView plan_friends;
     EditText memo;
+
+    // intent code
+    public static final int SEARCH_LOCATION_BTN=1000;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -80,6 +86,10 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_date.setOnFocusChangeListener(this);
         plan_end_time.setOnFocusChangeListener(this);
 
+        // 장소 찾기
+        find_location.setOnClickListener(this);
+
+        // 친구 초대
 
     }
 
@@ -101,6 +111,34 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 showTimeDialog((EditText) v);
                 v.clearFocus();
                 break;*/
+            case R.id.find_location:
+                findLocation();
+                break;
+
+            case R.id.find_friends:
+
+
+
+        }
+    }
+
+    private void findLocation(){
+        Intent intent = new Intent(getApplicationContext(), SearchPlaceActivity.class);
+        startActivityForResult(intent, SEARCH_LOCATION_BTN);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==SEARCH_LOCATION_BTN){
+            if(resultCode==RESULT_OK){
+                String place_title = data.getStringExtra("place_title");
+                String place_location = data.getStringExtra("place_location");
+                plan_location.setText(place_title);
+
+
+
+            }
         }
     }
 
@@ -228,6 +266,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         };
 
         if ((!v.getText().equals("")) && v.getText().length() > 0) {
+
+
+
             String[] selected_time = v.getText().toString().split(":");
 
             int hour = Integer.parseInt(selected_time[0]);
@@ -276,3 +317,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
 
 }
+
+
+
+

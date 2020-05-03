@@ -50,8 +50,8 @@ dependencies {
     //db 접근 관련
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.google.code.gson:gson:2.8.5'
-    
-    implementation files('libs/jsoup-1.13.1.jar')
+
+    implementation 'org.jsoup:jsoup:1.11.3'
 
     //달력
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'

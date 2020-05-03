@@ -13,6 +13,18 @@ public class PlaceItem {
         this.place_hash = place_hash;
     }
 
+    public String getPlace_title() {
+        return place_title;
+    }
+
+    public String getPlace_location() {
+        return place_location;
+    }
+
+    public String getPlace_hash() {
+        return place_hash;
+    }
+
     @Override
     public String toString() {
         return "";
