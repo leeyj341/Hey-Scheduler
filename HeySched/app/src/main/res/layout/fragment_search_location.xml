@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".plan.fragment.RecommandFragment" >
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -17,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:inputType="textPersonName"
             android:hint="Search"
-            android:textSize="25dp"/>
+            android:inputType="textPersonName"
+            android:textSize="25dp" />
 
         <ImageView
             android:id="@+id/search_btn"
@@ -40,11 +42,9 @@
             android:id="@+id/place_list_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
+            android:layout_weight="1" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/recommand_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
@@ -111,4 +111,5 @@
 
         </androidx.cardview.widget.CardView>
     </FrameLayout>
+
 </LinearLayout>

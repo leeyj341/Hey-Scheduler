@@ -1,23 +1,31 @@
-package com.second.project.heysched.plan;
+package com.second.project.heysched.plan.fragment;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.second.project.heysched.MainActivity;
 import com.second.project.heysched.R;
+import com.second.project.heysched.plan.SearchPlaceActivity;
 import com.second.project.heysched.plan.adapter.PlaceItem;
 import com.second.project.heysched.plan.adapter.SearchPlaceAdapter;
 
@@ -28,10 +36,17 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
-public class SearchPlaceActivity extends AppCompatActivity implements View.OnClickListener {
+/**
+ * A placeholder fragment containing a simple view.
+ */
+public class RecommandFragment extends Fragment {
+
+    private String title;
+    private int page;
+
+    // views
     EditText search_view;
     ImageView search_btn;
     RecyclerView place_list_view;
@@ -39,40 +54,53 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
     TextView recommand_place_location;
     TextView recommand_place_hash;
 
+    // adapter
+    SearchPlaceAdapter adapter = null;
+
     // search result list
-    List<PlaceItem> recycler_data = new ArrayList<PlaceItem>();
+    List<PlaceItem> recycler_data;
 
     // crawling
     String crawlURL;
-    String stringFormat;
 
-    // adapter
-    SearchPlaceAdapter adapter;
-
-    final Handler handler = new Handler(){
-        public void handleMessage(Message msg){
-            // 원래 하려던 동작 (UI변경 작업 등)
-            adapter.notifyDataSetChanged();
-        }
-    };
+    public static RecommandFragment newInstance(int page) {
+        RecommandFragment fragment = new RecommandFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("someint", page);
+        fragment.setArguments(bundle);
+        return fragment;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.place_list);
+        page = getArguments().getInt("someInt",0);
+        title = getArguments().getString("someTitle");
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_search_location, container, false);
+
+        // call 한 activity의 context 받기
+        final Activity activity = getActivity();
 
         // set views
-        search_view = findViewById(R.id.search_view);
-        search_btn = findViewById(R.id.search_btn);
-        place_list_view = findViewById(R.id.place_list_view);
-        recommand_place_title = findViewById(R.id.recommand_place_title);
-        recommand_place_location = findViewById(R.id.recommand_place_location);
-        recommand_place_hash = findViewById(R.id.recommand_place_hash);
+        search_view = view.findViewById(R.id.search_view);
+        search_btn = view.findViewById(R.id.search_btn);
+        place_list_view = view.findViewById(R.id.place_list_view);
+        recommand_place_title = view.findViewById(R.id.recommand_place_title);
+        recommand_place_location = view.findViewById(R.id.recommand_place_location);
+        recommand_place_hash = view.findViewById(R.id.recommand_place_hash);
 
 
-        search_btn.setOnClickListener(this);
-
-
+        // 검색 버튼 눌렀을때
+        search_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search(activity);
+            }
+        });
 
         // enter 눌렀을때 검색
         search_view.setOnKeyListener(new View.OnKeyListener() {
@@ -82,15 +110,19 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
                 if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     //Enter키눌렀을떄 처리
                     Log.d("jsoup", "enter works");
-                    search();
+                    search(activity);
                     return true;
                 }
                 return false;
             }
         });
+        recycler_data = new ArrayList<PlaceItem>();
 
+        recycler_data.add(new PlaceItem("맛집","서울",""));
+        recycler_data.add(new PlaceItem("맛집","서울",""));
+        recycler_data.add(new PlaceItem("맛집","서울",""));
 
-        adapter = new SearchPlaceAdapter(this, R.layout.place_row, recycler_data);
+        adapter = new SearchPlaceAdapter(activity, R.layout.place_row, recycler_data);
 
         // 장소 목록 list item의 onclickListener 설정
         adapter.setOnItemClickListener(new SearchPlaceAdapter.OnItemClickListener() {
@@ -98,38 +130,30 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
             public void onItemClick(View v, int position) {
                 PlaceItem item = recycler_data.get(position);
 
-                Intent intent = getIntent();
+                Intent intent = activity.getIntent();
                 intent.putExtra("place_title", item.getPlace_title());
                 intent.putExtra("place_location", item.getPlace_location());
                 //intent.putExtra("place_hash", item.place_hash);
 
-                setResult(RESULT_OK, intent);
+                activity.setResult(activity.RESULT_OK, intent);
 
-                finish();
+                activity.finish();
             }
         });
 
-        LinearLayoutManager manager = new LinearLayoutManager(getApplicationContext());
+        LinearLayoutManager manager = new LinearLayoutManager(activity.getApplicationContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         place_list_view.setLayoutManager(manager);
 
         place_list_view.setAdapter(adapter);
+
+        return view;
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            // 검색 버튼 클릭시
-            case R.id.search_btn:
-                search();
-                break;
-        }
-    }
-
-    private void search() {
+    private void search(Activity activity) {
         Log.d("jsoup", "search method works");
         String search_words = search_view.getText().toString();
-        Toast.makeText(this, "검색어 : " + search_words, Toast.LENGTH_SHORT).show();
+        Toast.makeText(activity.getApplicationContext(), "검색어 : " + search_words, Toast.LENGTH_SHORT).show();
         search_words = search_words.replace(" ", "+");
         crawlURL = "https://search.naver.com/search.naver?query=" + search_words;
 
@@ -150,9 +174,7 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
         protected Void doInBackground(Void... voids) {
             Log.d("jsoup", "doInBackground");
             placeCrawling();
-            Message msg = handler.obtainMessage();
-            handler.sendMessage(msg);
-
+            adapter.notifyDataSetChanged();
             Log.d("jsoup", "finish");
             return null;
         }
@@ -213,8 +235,6 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
 
                 Log.d("jsoup", "=========================");
 
-                Message msg = handler.obtainMessage();
-                handler.sendMessage(msg);
             }
 
             Elements maps = doc.select("dl.info_area");
@@ -241,11 +261,9 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
 
                 PlaceItem item = new PlaceItem(title, location, hashes);
                 recycler_data.add(item);
-
-                Message msg = handler.obtainMessage();
-                handler.sendMessage(msg);
-
             }
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -253,14 +271,4 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
 
     }
 
-    private void setItem() {
-
-    }
-
-
 }
-
-
-
-
-
