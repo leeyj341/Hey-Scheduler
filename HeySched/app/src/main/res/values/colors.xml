@@ -6,4 +6,7 @@
     <color name="color_dot1">#3e76fe</color>
     <color name="color_dot2">#43ad83</color>
     <color name="color_dot3">#ff867e</color>
+
+    <color name="mColor">#ED9595</color>
+    <color name="introColor">#ffdddd</color>
 </resources>
