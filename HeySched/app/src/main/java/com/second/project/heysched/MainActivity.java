@@ -11,7 +11,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.second.project.heysched.chat.ChatActivity;
+import com.second.project.heysched.chatting.ChatActivity;
 import com.second.project.heysched.fragment.main.DetailCalendarFragment;
 import com.second.project.heysched.fragment.main.MainCalendarFragment;
 

@@ -26,13 +26,39 @@
 
         </activity>
         <activity android:name=".map.MapActivity" />
-        <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" >
 
         </activity>
+
+        <!--채팅-->
+        <activity android:name=".chatting.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".chatting.LoginActivity" />
+        <activity android:name=".chatting.MainActivity" />
+        <activity android:name=".chatting.SignupActivity" />
+        <activity android:name=".chatting.chat.GroupMessageActivity" />
+        <activity android:name=".chatting.fragment.SelectFriendActivity" />
+        <activity android:name=".chatting.chat.MessageActivity" />
+
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyDwq0H7Y1eKw3ZBxw-x85Xzvew4WQmA8aM" />
+
+        <service
+            android:name=".chatting.MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.second.project.heysched.chat;
+package com.second.project.heysched.chatting;
 
 import android.content.Intent;
 import android.os.Bundle;
