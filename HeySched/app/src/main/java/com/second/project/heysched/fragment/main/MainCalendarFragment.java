@@ -1,5 +1,6 @@
 package com.second.project.heysched.fragment.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -21,6 +23,7 @@ import com.second.project.heysched.R;
 import com.second.project.heysched.calendar.EventDecorator;
 import com.second.project.heysched.calendar.SaturdayDecorator;
 import com.second.project.heysched.calendar.SundayDecorator;
+import com.second.project.heysched.plan.AddPlanActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -47,6 +50,7 @@ import okhttp3.Response;
  */
 public class MainCalendarFragment extends Fragment implements OnMonthChangedListener,
                                                             OnDateSelectedListener {
+    FloatingActionButton button;
     MaterialCalendarView materialCalendarView;
     CalendarDay selectedDate;
     List<Integer> colorList;
@@ -65,6 +69,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setView(view);
         setCalendar(view);
         String startDate = getYear() + "/" + getMonth() + "/0" + 1;
         String endDate = getYear() + "/" + getMonth() + "/" + getLastDayOfMonth(CalendarDay.today());
@@ -116,6 +121,17 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
         //materialCalendarView.addDecorator(new EventDecorator(getActivity(), R.color.color1, selectedDate));
     }
 
+    public void setView(View view) {
+        button = view.findViewById(R.id.main_floatingActionButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), AddPlanActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
 
     public int getYear() {
         GregorianCalendar calendar = new GregorianCalendar();
@@ -161,7 +177,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 /*Log.d("test", date[0]);
                 Log.d("test", date[1]);*/
 
-                url = new URL("http://172.30.1.41:8088/heyScheduler/calendar/select.do");
+                url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/select.do");
 
                 OkHttpClient client = new OkHttpClient();
                 String calendarInfo = json.toString();
@@ -221,6 +237,8 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
             super.onPostExecute(calendarDays);
 
             //List<Integer> colorList = new ArrayList<Integer>();
+            if(calendarDays.size() == 0) return;
+
             int curDay = calendarDays.get(0).getDay();
             ArrayList<Integer> newColorList = new ArrayList<Integer>();
             ArrayList<CalendarDay> newDayList = new ArrayList<CalendarDay>();
