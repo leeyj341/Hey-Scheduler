@@ -4,11 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:id="@+id/splashactivity_linearlayout">
+    android:orientation="vertical">
 
-    <ImageView
-        android:src="@drawable/date"
-        android:layout_width="50dp"
-        android:layout_height="50dp"/>
 </LinearLayout>

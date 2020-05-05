@@ -15,7 +15,12 @@ public class PlanVO {
 	public PlanVO() {
 		// TODO Auto-generated constructor stub
 	}
-	
+		
+	public PlanVO(String startdatetime) {
+		super();
+		this.startdatetime = startdatetime;
+	}
+
 	public PlanVO(String startdatetime, String enddatetime) {
 		super();
 		this.startdatetime = startdatetime;

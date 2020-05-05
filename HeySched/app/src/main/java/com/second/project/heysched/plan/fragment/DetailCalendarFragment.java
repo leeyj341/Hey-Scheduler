@@ -1,4 +1,4 @@
-package com.second.project.heysched.fragment.main;
+package com.second.project.heysched.plan.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -32,10 +32,16 @@
             android:textSize="24dp" />
 
         <TextView
-            android:id="@+id/plan_"
+            android:id="@+id/plan_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TextView" />
     </LinearLayout>
+    <TextView
+        android:id="@+id/plan_invisible_no"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0"
+        android:visibility="invisible"></TextView>
 </LinearLayout>
