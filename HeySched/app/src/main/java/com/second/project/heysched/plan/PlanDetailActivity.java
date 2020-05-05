@@ -54,7 +54,7 @@ public class PlanDetailActivity extends AppCompatActivity {
         picker = findViewById(R.id.color_picker);
         startdatetime = findViewById(R.id.plan_start_date);
         enddatetime = findViewById(R.id.plan_end_date);
-        location = findViewById(R.id.plan_location);
+        //location = findViewById(R.id.plan_location);
         friends = findViewById(R.id.plan_friends);
         content = findViewById(R.id.plan_content);
 

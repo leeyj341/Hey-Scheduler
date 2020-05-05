@@ -95,7 +95,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
         // 친구 초대
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+       /* PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -110,7 +110,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 // TODO: Handle the error.
                 Log.d("plz...","An error occurred: " + status);
             }
-        });
+        });*/
 
     }
 
