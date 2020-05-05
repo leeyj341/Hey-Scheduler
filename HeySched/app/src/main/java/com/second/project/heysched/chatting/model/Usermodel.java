@@ -7,5 +7,6 @@ public class Usermodel {
     public String pushToken;
     public String comment;
     public boolean chk;
+    public String address;
 
 }

@@ -25,4 +25,9 @@ public class CalendarDAOImpl implements CalendarDAO {
 	public PlanVO selectPlanDetail(String plan_no) {
 		return session.selectOne("com.project.heyScheduler.calendar.selectPlanDetail", plan_no);
 	}
+	
+	@Override
+	public int updatePlanDetail(PlanVO planItem) {
+		return session.update("com.project.heyScheduler.calendar.updatePlanDetail", planItem);
+	}
 }

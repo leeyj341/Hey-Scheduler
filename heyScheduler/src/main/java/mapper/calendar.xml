@@ -19,4 +19,10 @@
 			select * from plan where plan_no = #{plan_no}
 		]]>
 	</select>
+	<update id="updatePlanDetail" parameterType="plan">
+		update plan
+			set title = #{title}, startdatetime = to_date(#{startdatetime}, 'YYYY-MM-DD HH24:MI:SS'), loc_x = #{loc_x}, loc_y = #{loc_y}, content = #{content},
+				location = #{location}, enddatetime = to_date(#{enddatetime}, 'YYYY-MM-DD HH24:MI:SS'), color = #{color}, host_id = #{host_id}
+			where plan_no = #{plan_no}
+	</update>
 </mapper>
