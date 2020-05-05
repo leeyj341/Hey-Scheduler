@@ -91,7 +91,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     protected PlanItem doInBackground(String... values) {
                         PlanItem planItem = null;
                         try {
-                            URL url = new URL("http://192.168.100.14:8088/heyScheduler/calendar/selectPlanDetail.do");
+                            URL url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/selectPlanDetail.do");
                             JSONObject object = new JSONObject();
                             String result = "";
 

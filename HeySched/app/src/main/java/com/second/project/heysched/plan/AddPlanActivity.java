@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -99,8 +100,8 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 findLocation();
                 break;
 
-            case R.id.find_friends:*/
-
+            /*case R.id.find_friend:
+                break;*/
 
 
         }

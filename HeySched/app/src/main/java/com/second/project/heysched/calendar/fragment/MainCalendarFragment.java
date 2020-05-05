@@ -198,7 +198,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 /*Log.d("test", date[0]);
                 Log.d("test", date[1]);*/
 
-                url = new URL("http://192.168.100.14:8088/heyScheduler/calendar/select.do");
+                url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/select.do");
 
                 OkHttpClient client = new OkHttpClient();
                 String calendarInfo = json.toString();
