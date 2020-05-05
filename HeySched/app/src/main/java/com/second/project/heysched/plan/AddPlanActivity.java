@@ -13,14 +13,17 @@ import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
@@ -32,6 +35,7 @@ import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
 import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.second.project.heysched.R;
+import com.second.project.heysched.chatting.model.Usermodel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -47,13 +51,16 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     EditText plan_end_date;
     EditText plan_end_time;
     InputMethodManager imm;
-    Button find_friend;
     TextView plan_friends;
     EditText memo;
     ImageView recommand_btn;
+    TextView plan_location;
+    LinearLayout invited_img_layout;
+    LayoutInflater inflater;
 
     // intent code
     public static final int SEARCH_LOCATION_BTN=1000;
+    public static final int INVITE_FRIENDS_BTN=2000;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -68,15 +75,19 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_date = findViewById(R.id.plan_end_date);
         plan_end_time = findViewById(R.id.plan_end_time);
         recommand_btn = findViewById(R.id.recommand_btn);
+        plan_location = findViewById(R.id.plan_location);
         //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
-        //find_friend = findViewById(R.id.find_friends);
+        invited_img_layout = findViewById(R.id.invited_img_layout);
         memo = findViewById(R.id.memo);
 
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
         plan_start_time.setShowSoftInputOnFocus(false);
         plan_end_time.setShowSoftInputOnFocus(false);
+
+        //친구 초대시 사진 보여주기
+        inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 색
         color_picker.setOnClickListener(this);
@@ -95,8 +106,11 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         recommand_btn.setOnClickListener(this);
 
         // 친구 초대
+        plan_friends.setOnClickListener(this);
 
-       /* PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+
+        /*PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -127,9 +141,26 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 findLocation();
                 break;
 
-            /*case R.id.find_friend:
-                break;*/
+            case R.id.plan_friends:
+                inviteFriends();
+                break;
+            case R.id.ok:
+                save();
+                break;
+            case R.id.cancle:
+                finish();
+                break;
+
         }
+    }
+
+    private void save(){
+        //db에 저장
+        finish();
+    }
+    private void inviteFriends(){
+        Intent intent = new Intent(getApplicationContext(),InviteFriendActivity.class);
+        startActivityForResult(intent, INVITE_FRIENDS_BTN);
     }
 
     private void findLocation(){
@@ -141,11 +172,32 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SEARCH_LOCATION_BTN){
-            if(resultCode==RESULT_OK){
-                String place_title = data.getStringExtra("place_title");
-                String place_location = data.getStringExtra("place_location");
-            }
+        switch (requestCode){
+            // 선택한 장소 받기
+            case SEARCH_LOCATION_BTN:
+                if(resultCode==RESULT_OK){
+                    String place_title = data.getStringExtra("place_title");
+                    String place_location = data.getStringExtra("place_location");
+
+                    plan_location.setText(place_title);
+                }
+                break;
+            // 선택한 친구목록 받기
+            case INVITE_FRIENDS_BTN:
+                if(resultCode==RESULT_OK){
+                    //체크한 친구들 화면에 추가
+                    ArrayList<String> user_uids = data.getStringArrayListExtra("invited_user_ids");
+                    ArrayList<String> user_imgs = data.getStringArrayListExtra("invited_user_imgs");
+
+                    // Log!! return data check!
+                    for(int i =0;i<user_uids.size();i++){
+                        Log.d("invited_friends","uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i));
+                        Toast.makeText(this, "uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i),Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }
+                break;
         }
     }
 

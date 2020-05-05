@@ -51,7 +51,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:tint="#60000000"
             app:srcCompat="@drawable/ic_clock" />
 
@@ -59,7 +59,7 @@
             android:id="@+id/plan_start_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
             android:hint="@string/startdate"
@@ -69,7 +69,7 @@
             android:id="@+id/plan_start_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
             android:hint="@string/starttime"
@@ -92,7 +92,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:tint="#60000000"
             app:srcCompat="@drawable/ic_clock" />
 
@@ -100,7 +100,7 @@
             android:id="@+id/plan_end_date"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
             android:hint="@string/enddate"
@@ -110,7 +110,7 @@
             android:id="@+id/plan_end_time"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
             android:hint="@string/endtime"
@@ -132,7 +132,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:tint="#60000000"
             app:srcCompat="@drawable/ic_map" />
 
@@ -142,6 +142,15 @@
             android:layout_height="wrap_content"
             android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
             />-->
+
+        <TextView
+            android:id="@+id/plan_location"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:gravity="center_vertical"
+            android:hint="장소"
+            android:textSize="22dp" />
 
         <ImageView
             android:id="@+id/recommand_btn"
@@ -190,6 +199,16 @@
             android:hint="참석자 초대"
             android:paddingLeft="5dp"
             android:textSize="20dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/invited_img_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_margin="20dp">
 
     </LinearLayout>
 
