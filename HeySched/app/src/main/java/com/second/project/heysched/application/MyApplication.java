@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Build;
 
 public class MyApplication extends Application {
+    public static String GROUP_KEY_PLAN = "com.project.heysched.PLAN";
     public static NotificationChannel notificationChannel;
 
     @Override
@@ -17,7 +18,7 @@ public class MyApplication extends Application {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             if(notificationChannel != null) return;
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationChannel notificationChannel = new NotificationChannel("noti_plan", "noti_plan", NotificationManager.IMPORTANCE_DEFAULT);
+            NotificationChannel notificationChannel = new NotificationChannel("noti_plan", "noti_plan", NotificationManager.IMPORTANCE_HIGH);
             notificationChannel.setDescription("일정 알림 채널");
             notificationChannel.enableLights(true);
             notificationChannel.setLightColor(Color.GREEN);

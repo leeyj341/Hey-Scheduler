@@ -93,4 +93,32 @@ public class CalendarController {
 		
 		return json;
 	}
+	
+	@RequestMapping(value="/calendar/modify.do", method=RequestMethod.POST, produces="application/json;charset=UTF-8")
+	public @ResponseBody String updatePlanDetail(@RequestBody String planData) {
+		ObjectMapper mapper = new ObjectMapper();
+		String json = "";
+		try {
+			PlanVO planItem = mapper.readValue(planData, PlanVO.class);
+			int resultInt = service.updatePlanDetail(planItem);
+			String result = "";
+			if(resultInt == 1) {
+				result = "수정에 성공했습니다.";
+			} else {
+				result = "수정에 실패했습니다.";
+			}
+			json = mapper.writeValueAsString(result);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch blockcm,
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return json;
+	}
 }
