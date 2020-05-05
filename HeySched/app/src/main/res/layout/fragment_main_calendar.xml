@@ -16,14 +16,14 @@
         android:layout_height="wrap_content"
         android:layout_weight="1">
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/schedList"
             android:layout_width="match_parent"
             android:layout_height="320dp"
             android:layout_weight="1">
 
 
-        </ListView>
+        </androidx.recyclerview.widget.RecyclerView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/main_floatingActionButton"

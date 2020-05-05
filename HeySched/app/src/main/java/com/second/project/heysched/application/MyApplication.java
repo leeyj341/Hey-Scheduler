@@ -9,7 +9,7 @@ import android.graphics.Color;
 import android.os.Build;
 
 public class MyApplication extends Application {
-    static NotificationChannel notificationChannel;
+    public static NotificationChannel notificationChannel;
 
     @Override
     public void onCreate() {

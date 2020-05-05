@@ -2,6 +2,7 @@ package com.second.project.heysched;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,9 +12,9 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
-import com.second.project.heysched.chatting.ChatActivity;
-import com.second.project.heysched.fragment.main.DetailCalendarFragment;
-import com.second.project.heysched.fragment.main.MainCalendarFragment;
+import com.second.project.heysched.chatting.SplashActivity;
+import com.second.project.heysched.plan.fragment.DetailCalendarFragment;
+import com.second.project.heysched.calendar.fragment.MainCalendarFragment;
 
 public class MainActivity extends AppCompatActivity {
     static final int ACTIVITY_CHAT = 11;
@@ -52,8 +53,13 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = null;
                 switch (id) {
                     case R.id.drawer_menu_chat:
-                        intent = new Intent(MainActivity.this, ChatActivity.class);
-                        startActivityForResult(intent, ACTIVITY_CHAT);
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        intent = new Intent(MainActivity.this, SplashActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        //startActivityForResult(intent, ACTIVITY_CHAT);
+                        startActivity(intent);
+                        finish();
                         break;
                 }
                 return false;

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.second.project.heysched.R;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class AlarmActivity extends AppCompatActivity {
@@ -26,7 +27,7 @@ public class AlarmActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long time = System.currentTimeMillis() / 1000;
+                long time = Calendar.getInstance().getTimeInMillis();
                 Date date = new Date(time);
                 SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
                 SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
@@ -42,12 +43,10 @@ public class AlarmActivity extends AppCompatActivity {
                 intent.putExtra("day", day);
                 intent.putExtra("hour", hour);
                 intent.putExtra("minute", minute);
-
                 int id = Integer.valueOf(month+day+hour+minute);
                 PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
                 AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                //manager.set(AlarmManager.RTC_WAKEUP, )
-
+                manager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
             }
         });
     }

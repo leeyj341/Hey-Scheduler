@@ -1,16 +1,19 @@
 package com.second.project.heysched.chatting;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.iid.FirebaseInstanceId;
-
 import com.second.project.heysched.R;
 import com.second.project.heysched.chatting.fragment.AccountFragment;
 import com.second.project.heysched.chatting.fragment.ChatFragment;
@@ -20,12 +23,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chatting);
+
+        drawerLayout = findViewById(R.id.main_drawer);
+        navigationView = findViewById(R.id.main_drawer_nav);
+        selectActivity();
 
         BottomNavigationView bottomNavigationView=findViewById(R.id.mainactivity_bottomnavigationview);
 
@@ -57,5 +65,26 @@ public class MainActivity extends AppCompatActivity {
         map.put("pushToken",token);
 
         FirebaseDatabase.getInstance().getReference().child("users").child(uid).updateChildren(map); //여기서 setValue하면 기존 데이터 날라감 그래서 update해야함
+    }
+
+    public void selectActivity() {
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                int id = item.getItemId();
+                Intent intent = null;
+                switch (id) {
+                    case R.id.drawer_menu_calendar:
+                        drawerLayout.closeDrawer(Gravity.LEFT);
+                        intent = new Intent(MainActivity.this, com.second.project.heysched.MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                        finish();
+                        break;
+                }
+                return false;
+            }
+        });
     }
 }

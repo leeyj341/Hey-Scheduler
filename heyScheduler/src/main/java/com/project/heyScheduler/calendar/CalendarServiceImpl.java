@@ -16,4 +16,14 @@ public class CalendarServiceImpl implements CalendarService {
 	public List<PlanVO> selectPlan(PlanVO vo) {
 		return dao.selectPlan(vo);
 	}
+	
+	@Override
+	public List<PlanVO> selectPlansOnDay(PlanVO vo) {
+		return dao.selectPlansOnDay(vo);
+	}
+	
+	@Override
+	public PlanVO selectPlanDetail(String plan_no) {
+		return dao.selectPlanDetail(plan_no);
+	}
 }

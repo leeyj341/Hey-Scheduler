@@ -1,32 +1,26 @@
 package com.second.project.heysched.plan;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.second.project.heysched.R;
-import com.second.project.heysched.plan.adapter.SearchPlaceAdapter;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,9 +58,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_date = findViewById(R.id.plan_end_date);
         plan_end_time = findViewById(R.id.plan_end_time);
         plan_location = findViewById(R.id.plan_location);
-        find_location = findViewById(R.id.find_location);
+        //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
-        find_friend = findViewById(R.id.find_friends);
+        //find_friend = findViewById(R.id.find_friends);
         memo = findViewById(R.id.memo);
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
@@ -87,7 +81,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_time.setOnFocusChangeListener(this);
 
         // 장소 찾기
-        find_location.setOnClickListener(this);
+        //find_location.setOnClickListener(this);
 
         // 친구 초대
 
@@ -111,11 +105,11 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 showTimeDialog((EditText) v);
                 v.clearFocus();
                 break;*/
-            case R.id.find_location:
+            /*case R.id.find_location:
                 findLocation();
                 break;
 
-            case R.id.find_friends:
+            case R.id.find_friends:*/
 
 
 
