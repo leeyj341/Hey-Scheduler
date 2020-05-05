@@ -58,7 +58,7 @@
         <EditText
             android:id="@+id/plan_start_date"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
@@ -68,7 +68,7 @@
         <EditText
             android:id="@+id/plan_start_time"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
@@ -99,7 +99,7 @@
         <EditText
             android:id="@+id/plan_end_date"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
@@ -109,7 +109,7 @@
         <EditText
             android:id="@+id/plan_end_time"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:cursorVisible="false"
             android:ems="10"
@@ -123,7 +123,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/imageView5"
@@ -146,7 +147,7 @@
         <TextView
             android:id="@+id/plan_location"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="5"
             android:gravity="center_vertical"
             android:hint="장소"
@@ -177,7 +178,8 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:layout_weight="1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <ImageView
             android:id="@+id/imageView4"
@@ -193,24 +195,20 @@
         <TextView
             android:id="@+id/plan_friends"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="2"
             android:gravity="center_vertical"
             android:hint="참석자 초대"
             android:paddingLeft="5dp"
-            android:textSize="20dp" />
+            android:textSize="22dp" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/invited_img_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="horizontal"
-        android:layout_margin="20dp">
-
-    </LinearLayout>
+        android:layout_margin="20dp" />
 
     <EditText
         android:id="@+id/memo"

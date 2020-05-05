@@ -15,6 +15,7 @@ public class PlanItem implements Parcelable {
     String color;
     String host_id;
 
+    public PlanItem(){}
     public PlanItem(String plan_no, String title, String content, String color) {
         this.plan_no = plan_no;
         this.title = title;
