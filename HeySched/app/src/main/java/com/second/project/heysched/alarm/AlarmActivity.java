@@ -12,7 +12,9 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.second.project.heysched.R;
+import com.second.project.heysched.calendar.adapter.PlanItem;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,7 +31,17 @@ public class AlarmActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sDate = "2020-05-06 00:58:00";
+                String sDate = "2020-05-06 03:50:00";
+                PlanItem planItem = new PlanItem("1",
+                        "발표한다",
+                        "2020-05-06 03:50:00",
+                        "37.5006789",
+                        "127.03524589999999",
+                        "수정완료",
+                        "스타벅스 역삼역점",
+                        "2020-05-06 04:00:00",
+                        "#FFCE93D8",
+                        FirebaseAuth.getInstance().getCurrentUser().getUid());
 
                 SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
@@ -55,6 +67,7 @@ public class AlarmActivity extends AppCompatActivity {
                 intent.putExtra("day", day);
                 intent.putExtra("hour", hour);
                 intent.putExtra("minute", minute);
+                intent.putExtra("planItem", planItem);
                 int id = Integer.valueOf(month+day+hour+minute);
 
 

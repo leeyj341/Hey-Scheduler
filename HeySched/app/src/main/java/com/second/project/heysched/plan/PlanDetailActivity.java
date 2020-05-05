@@ -3,6 +3,7 @@ package com.second.project.heysched.plan;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -38,6 +39,7 @@ public class PlanDetailActivity extends AppCompatActivity {
         setViews();
         Intent intent = getIntent();
         planItem = intent.getParcelableExtra("planVO");
+        Log.d("text", planItem.toString());
 
         this.title.setText(planItem.getTitle());
         this.picker.setColorFilter(Color.parseColor(planItem.getColor()));
@@ -53,7 +55,7 @@ public class PlanDetailActivity extends AppCompatActivity {
         picker = findViewById(R.id.color_picker);
         startdatetime = findViewById(R.id.plan_start_date);
         enddatetime = findViewById(R.id.plan_end_date);
-        //location = findViewById(R.id.plan_location);
+        location = findViewById(R.id.plan_location);
         friends = findViewById(R.id.plan_friends);
         content = findViewById(R.id.plan_content);
 

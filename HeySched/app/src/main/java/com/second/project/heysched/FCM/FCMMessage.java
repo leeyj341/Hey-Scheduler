@@ -8,9 +8,12 @@ import com.google.firebase.messaging.RemoteMessage;
 public class FCMMessage extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        if(remoteMessage.getData().size() > 0) {
-
-        }
         super.onMessageReceived(remoteMessage);
+
+        sendNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+    }
+
+    public void sendNotification(String title, String body) {
+
     }
 }

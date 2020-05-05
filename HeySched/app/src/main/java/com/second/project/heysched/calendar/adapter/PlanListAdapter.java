@@ -91,7 +91,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     protected PlanItem doInBackground(String... values) {
                         PlanItem planItem = null;
                         try {
-                            URL url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/selectPlanDetail.do");
+                            URL url = new URL("http://172.20.10.11:8088/heyScheduler/calendar/selectPlanDetail.do");
                             JSONObject object = new JSONObject();
                             String result = "";
 
@@ -109,18 +109,19 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                             result = response.body().string();
                             Log.d("test", result);
                             JSONObject planDetail = new JSONObject(result);
-
-                            planItem = new PlanItem(planDetail.getString("plan_no"),
-                                    planDetail.getString("title"),
-                                    planDetail.getString("startdatetime"),
-                                    planDetail.getString("loc_x"),
-                                    planDetail.getString("loc_y"),
-                                    planDetail.getString("content"),
-                                    planDetail.getString("location"),
-                                    planDetail.getString("enddatetime"),
-                                    planDetail.getString("color"),
-                                    planDetail.getString("host_id")
-                            );
+                            if(planDetail.getString("plan_no") != null) {
+                                planItem = new PlanItem(planDetail.getString("plan_no"),
+                                        planDetail.getString("title"),
+                                        planDetail.getString("startdatetime"),
+                                        planDetail.getString("loc_x"),
+                                        planDetail.getString("loc_y"),
+                                        planDetail.getString("content"),
+                                        planDetail.getString("location"),
+                                        planDetail.getString("enddatetime"),
+                                        planDetail.getString("color"),
+                                        planDetail.getString("host_id")
+                                );
+                            }
 
                         } catch (MalformedURLException e) {
                             e.printStackTrace();
@@ -135,7 +136,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     @Override
                     protected void onPostExecute(PlanItem planItem) {
                         super.onPostExecute(planItem);
-
+                        if(planItem == null) return;
                         Intent intent = new Intent(context, PlanDetailActivity.class);
                         intent.putExtra("planVO", planItem);
                         context.startActivity(intent);
