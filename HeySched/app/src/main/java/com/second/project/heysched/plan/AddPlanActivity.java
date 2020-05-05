@@ -21,8 +21,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
@@ -68,7 +70,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         recommand_btn = findViewById(R.id.recommand_btn);
         //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
-        find_friend = findViewById(R.id.find_friends);
+        //find_friend = findViewById(R.id.find_friends);
         memo = findViewById(R.id.memo);
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
@@ -124,8 +126,8 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 findLocation();
                 break;
 
-            case R.id.find_friends:
-
+            /*case R.id.find_friend:
+                break;*/
 
 
         }
@@ -326,7 +328,3 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
 
 }
-
-
-
-

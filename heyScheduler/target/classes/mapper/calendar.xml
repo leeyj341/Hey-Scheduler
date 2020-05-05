@@ -9,4 +9,14 @@
 			select * from plan where startdatetime >= #{startdatetime} and startdatetime <= #{enddatetime} order by startdatetime
 		]]>
 	</select>
+	<select id="selectPlansOnDay" parameterType="plan" resultType="plan">
+		<![CDATA[
+			select * from plan where startdatetime >= #{startdatetime} and startdatetime < to_date(#{startdatetime}, 'yy-MM-dd') + 1 order by startdatetime
+		]]>
+	</select>
+	<select id="selectPlanDetail" parameterType="String" resultType="plan">
+		<![CDATA[
+			select * from plan where plan_no = #{plan_no}
+		]]>
+	</select>
 </mapper>

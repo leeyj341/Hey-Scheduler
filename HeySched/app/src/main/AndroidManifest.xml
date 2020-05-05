@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.second.project.heysched">
-
+    <!-- 지도 관련 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 알림 -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
+        android:name=".application.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,6 +18,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".plan.InviteFriendActivity"></activity>
         <activity android:name=".plan.PlaceAutocompleteActivity"></activity>
+        <activity android:name=".FCM.FCMActivity"/>
         <activity
             android:name=".plan.SearchLocationActivity"
             android:label="@string/title_activity_search_location"
@@ -31,28 +34,18 @@
             </intent-filter>
             -->
         </activity>
+        <activity android:name=".plan.PlanDetailActivity" />
+        <activity android:name=".alarm.AlarmActivity"/>
         <activity android:name=".plan.AddPlanActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".map.MapActivity" />
         <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" /> <!-- 채팅 -->
-        <activity android:name=".chatting.SplashActivity">
-
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
-        </activity>
+        <activity android:name=".chatting.SplashActivity" />
         <activity android:name=".chatting.LoginActivity" />
-        <activity android:name=".chatting.MainActivity" />
+        <activity
+            android:name=".chatting.MainActivity"
+            android:launchMode="singleTop" />
         <activity android:name=".chatting.SignupActivity" />
         <activity android:name=".chatting.chat.GroupMessageActivity" />
         <activity android:name=".chatting.fragment.SelectFriendActivity" />
@@ -69,6 +62,12 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <receiver android:name=".alarm.AlarmReceiver">
+            <intent-filter>
+                <action android:name="com.project.heysched.ALARM_START" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

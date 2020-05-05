@@ -15,14 +15,13 @@
         android:orientation="horizontal">
 
 
-        <EditText
+        <TextView
             android:id="@+id/plan_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
             android:hint="@string/title"
-            android:inputType="textPostalAddress"
             android:textSize="22dp"
             android:layout_marginRight="10dp"/>
 
@@ -52,7 +51,7 @@
             android:gravity="center_vertical"
             android:textSize="20dp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/plan_start_date"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -61,14 +60,6 @@
             android:cursorVisible="false"
             android:textSize="20dp"
             />
-
-        <EditText
-            android:id="@+id/plan_start_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
 
     </LinearLayout>
 
@@ -86,7 +77,7 @@
             android:gravity="center_vertical"
             android:textSize="20dp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/plan_end_date"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -94,14 +85,6 @@
             android:cursorVisible="false"
             android:ems="10"
             android:textSize="20dp" />
-
-        <EditText
-            android:id="@+id/plan_end_time"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="textPersonName" />
     </LinearLayout>
 
     <LinearLayout
@@ -117,14 +100,9 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:text="TextView"
+            android:textSize="15dp"
             android:gravity="center_vertical"/>
 
-        <Button
-            android:id="@+id/find_location"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Button" />
     </LinearLayout>
 
     <LinearLayout
@@ -140,14 +118,9 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:text="TextView"
+            android:textSize="15dp"
             android:gravity="center_vertical"/>
 
-        <Button
-            android:id="@+id/find_friends"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Button" />
     </LinearLayout>
 
     <TextView
@@ -164,6 +137,8 @@
         android:layout_weight="0.1"
         android:background="#FFFFFF"
         app:elevation="40dp"
+        app:menu="@menu/detail_plan_menu"
+        android:id="@+id/detail_modify_button"
         android:clipToPadding="false"/>
 
 

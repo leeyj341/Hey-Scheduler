@@ -18,6 +18,7 @@ import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.second.project.heysched.R;
 
 public class SplashActivity extends AppCompatActivity {
+    static final int ACTIVITY_PLAN = 10;
 
     private LinearLayout linearLayout;
     private FirebaseRemoteConfig mFirebaseRemoteConfig;
@@ -26,7 +27,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN); //상태바를 없앰
 
