@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.second.project.heysched.chatting.ChatActivity;
+import com.second.project.heysched.chatting.SplashActivity;
 import com.second.project.heysched.fragment.main.DetailCalendarFragment;
 import com.second.project.heysched.fragment.main.MainCalendarFragment;
 
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = null;
                 switch (id) {
                     case R.id.drawer_menu_chat:
-                        intent = new Intent(MainActivity.this, ChatActivity.class);
+                        intent = new Intent(MainActivity.this, SplashActivity.class);
                         startActivityForResult(intent, ACTIVITY_CHAT);
                         break;
                 }
