@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InviteFriendActivity extends AppCompatActivity {
+    ArrayList<String> invited_users_uid = new ArrayList<String>();
+    ArrayList<String> invited_users_img = new ArrayList<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +52,14 @@ public class InviteFriendActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 친구 초대 버튼 클릭 시
+                Log.d("invited","intent invite btn start");
+                Intent intent = getIntent();
+                intent.putStringArrayListExtra("invited_user_ids", invited_users_uid);
+                intent.putStringArrayListExtra("invited_user_imgs", invited_users_img);
+
+                setResult(RESULT_OK, intent);
+                Log.d("invited","invite btn clicked");
+                finish();
             }
         });
     }
@@ -104,44 +114,32 @@ public class InviteFriendActivity extends AppCompatActivity {
 
             ((SelectFriendRecyclerViewAdapter.CustomViewHolder)holder).textView.setText(users.get(position).userName);
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Toast.makeText(InviteFriendActivity.this,"position: "+position,Toast.LENGTH_SHORT).show();
-                    /*Intent intent=new Intent(v.getContext(), MessageActivity.class);
-                    // 위에 인텐트 선언했으므로 클릭한 상대방의 채팅방(MessageActivity)으로 옮긴다
-                    intent.putExtra("destinationUid",usermodels.get(position).uid);
-
-                    ActivityOptions activityOptions=null;
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.JELLY_BEAN){
-                        activityOptions=ActivityOptions.makeCustomAnimation(v.getContext(),R.anim.fromright,R.anim.toleft);
-                        startActivity(intent,activityOptions.toBundle());
-                    }*/
-
-                }
-            });
             if (users.get(position).comment!=null){
                 ((SelectFriendRecyclerViewAdapter.CustomViewHolder) holder).textView_comment.setText(users.get(position).comment);
             }else{
                 ((SelectFriendRecyclerViewAdapter.CustomViewHolder) holder).textView_comment.setText("");
             }
 
+
             ((SelectFriendRecyclerViewAdapter.CustomViewHolder) holder).checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     //체크된 상태
                     if(isChecked){
-                        //users.get(position).chk==true;
+
+                        invited_users_uid.add(users.get(position).uid);
+                        invited_users_img.add(users.get(position).profileImageUrl);
                         //chatModel.users.put(usermodels.get(position).uid,true);
 
                     }else{//체크 취소 상태
                         //chatModel.users.remove(usermodels.get(position));
+                        invited_users_uid.remove(users.get(position).uid);
+                        invited_users_img.remove(users.get(position).profileImageUrl);
                     }
                 }
 
             });
-            Log.d("finishh","확인");
+            Log.d("finish","확인");
         }
 
         @Override
