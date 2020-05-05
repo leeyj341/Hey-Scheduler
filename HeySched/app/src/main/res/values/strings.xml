@@ -11,4 +11,7 @@
     <string name="enddate">종료일</string>
     <string name="endtime">종료시간</string>
     <string name="rc_color">splash_background</string>
+    <string name="title_activity_search_location">SearchLocationActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

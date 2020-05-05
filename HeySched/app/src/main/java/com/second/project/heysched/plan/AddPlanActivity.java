@@ -81,7 +81,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_time.setOnFocusChangeListener(this);
 
         // 장소 찾기
-        //find_location.setOnClickListener(this);
+        plan_location.setOnClickListener(this);
 
         // 친구 초대
 
@@ -93,19 +93,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
             case R.id.color_picker:
                 openColorPicker();
                 break;
-           /* case R.id.plan_start_date:
-            case R.id.plan_end_date:
-                hideKeyboard();
-                showDateDialog((EditText) v);
-                v.clearFocus();
-                break;
-            case R.id.plan_start_time:
-            case R.id.plan_end_time:
-                hideKeyboard();
-                showTimeDialog((EditText) v);
-                v.clearFocus();
-                break;*/
-            /*case R.id.find_location:
+
+            case R.id.plan_location:
+                Log.d("clickEvent","clicked!");
                 findLocation();
                 break;
 
@@ -117,6 +107,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void findLocation(){
+        //Intent intent = new Intent(getApplicationContext(), SearchLocationActivity.class);
         Intent intent = new Intent(getApplicationContext(), SearchPlaceActivity.class);
         startActivityForResult(intent, SEARCH_LOCATION_BTN);
     }
@@ -186,6 +177,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onChooseColor(int position, int color) {
                         color_picker.setColorFilter(color, PorterDuff.Mode.SRC_IN);
+
+                        // insert용
+                        getResources().getColor(color);
                     }
 
                     @Override

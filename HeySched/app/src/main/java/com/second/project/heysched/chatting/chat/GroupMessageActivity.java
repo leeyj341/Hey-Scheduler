@@ -156,16 +156,14 @@ public class GroupMessageActivity extends AppCompatActivity {
 
         //푸쉬를 받을때 데이터를 파싱하는 부분
 
-        RequestBody requestBody= RequestBody.create(MediaType.parse("application/json; chatset=utf-8"),gson.toJson(notificationModel));
+        RequestBody requestBody=RequestBody.create(MediaType.parse("application/json; chatset=utf-8"),gson.toJson(notificationModel));
 
         Request request=new Request.Builder().header("Content-Type","application/json")
                 .addHeader("Authorization","key=AIzaSyA-n7dsLmvRFsKjEJJoWnTIkd1XhxaIgBg")
                 .url("https://fcm.googleapis.com/fcm/send")
                 .post(requestBody)
                 .build();
-
         OkHttpClient okHttpClient=new OkHttpClient();
-
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -315,7 +313,7 @@ public class GroupMessageActivity extends AppCompatActivity {
                 if (count > 0) {
                     textView.setVisibility(View.VISIBLE);
                     textView.setText(String.valueOf(count));
-                }else {
+                }else{
                     textView.setVisibility(View.INVISIBLE);
                 }
             }

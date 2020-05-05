@@ -17,6 +17,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".FCM.FCMActivity">
+        <activity
+            android:name=".plan.SearchLocationActivity"
+            android:label="@string/title_activity_search_location"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
+        <activity android:name=".dbtest.DBTestActivity" />
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,7 +33,7 @@
         </activity>
         <activity android:name=".plan.PlanDetailActivity" />
         <activity android:name=".alarm.AlarmActivity">
-
+        <activity android:name=".plan.AddPlanActivity">
         </activity>
         <activity android:name=".dbtest.DBTestActivity" />
         <activity
@@ -47,7 +55,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDwq0H7Y1eKw3ZBxw-x85Xzvew4WQmA8aM" />
+            android:value="${googleMapApiKey}" />
 
         <service
             android:name=".chatting.MyFirebaseMessagingService"
