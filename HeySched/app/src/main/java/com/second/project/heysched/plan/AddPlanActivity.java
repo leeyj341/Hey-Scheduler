@@ -47,13 +47,13 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     EditText plan_end_date;
     EditText plan_end_time;
     InputMethodManager imm;
-    Button find_friend;
     TextView plan_friends;
     EditText memo;
     ImageView recommand_btn;
 
     // intent code
     public static final int SEARCH_LOCATION_BTN=1000;
+    public static final int INVITE_FRIENDS_BTN=1001;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -70,7 +70,6 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         recommand_btn = findViewById(R.id.recommand_btn);
         //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
-        //find_friend = findViewById(R.id.find_friends);
         memo = findViewById(R.id.memo);
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
@@ -94,8 +93,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         recommand_btn.setOnClickListener(this);
 
         // 친구 초대
+        plan_friends.setOnClickListener(this);
 
-        PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+        /*PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
                 getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
@@ -110,7 +110,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 // TODO: Handle the error.
                 Log.d("plz...","An error occurred: " + status);
             }
-        });
+        });*/
 
     }
 
@@ -126,11 +126,27 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 findLocation();
                 break;
 
-            /*case R.id.find_friend:
-                break;*/
+            case R.id.plan_friends:
+
+                break;
+            case R.id.ok:
+                save();
+                break;
+            case R.id.cancle:
+                finish();
+                break;
 
 
         }
+    }
+
+    private void save(){
+        //db에 저장
+        finish();
+    }
+    private void inviteFriends(){
+        Intent intent = new Intent(getApplicationContext(),InviteFriendActivity.class);
+        startActivityForResult(intent, INVITE_FRIENDS_BTN);
     }
 
     private void findLocation(){
@@ -142,10 +158,18 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // 선택한 장소 받기
         if(requestCode==SEARCH_LOCATION_BTN){
             if(resultCode==RESULT_OK){
                 String place_title = data.getStringExtra("place_title");
                 String place_location = data.getStringExtra("place_location");
+            }
+        }
+
+        // 선택한 친구목록 받기
+        if(requestCode==INVITE_FRIENDS_BTN){
+            if(requestCode==RESULT_OK){
+                //체크한 친구들 화면에 추가
             }
         }
     }

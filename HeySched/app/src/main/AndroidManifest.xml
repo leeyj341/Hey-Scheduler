@@ -26,13 +26,6 @@
         <activity android:name=".dbtest.DBTestActivity" />
         <activity android:name=".MainActivity">
 
-            <!--
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-            -->
         </activity>
         <activity android:name=".plan.PlanDetailActivity" />
         <activity android:name=".alarm.AlarmActivity"/>
@@ -41,7 +34,13 @@
         <activity android:name=".map.MapActivity" />
         <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" /> <!-- 채팅 -->
-        <activity android:name=".chatting.SplashActivity" />
+        <activity android:name=".chatting.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".chatting.LoginActivity" />
         <activity
             android:name=".chatting.MainActivity"

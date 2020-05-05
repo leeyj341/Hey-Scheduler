@@ -176,10 +176,10 @@ public class PeopleFragment extends Fragment {
 
                         //내 아이디는 친구리스트에 안담는것
                         Usermodel usermodel=snapshot.getValue(Usermodel.class);
-                        if(usermodel.uid.equals(myUid)){
+                        /*if(usermodel.uid.equals(myUid)){
 
                             continue;
-                        }
+                        }*/
                         usermodels.add(snapshot.getValue(Usermodel.class));
 
 
