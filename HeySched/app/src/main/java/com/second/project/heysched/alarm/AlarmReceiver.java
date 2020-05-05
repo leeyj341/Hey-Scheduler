@@ -23,7 +23,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         String hour = intent.getStringExtra("hour");
         String minute = intent.getStringExtra("minute");
 
-        Log.d("test", intent.getStringExtra("month") +"");
         Log.d("test", "나는 리시버 아하하하하하");
 
         Intent alarmIntent = new Intent(context, MainActivity.class);
@@ -31,9 +30,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"noti_plan")
                 .setSmallIcon(R.drawable.ic_icon)
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setOngoing(false)
                 .setContentTitle(month + "월 " + day + "일 " + hour + "시 " + minute + "분 " + "일정이 있습니다.")
                 .setContentIntent(pendingIntent)
                 .setContentText("테스트")
+                .setFullScreenIntent(pendingIntent, true)
                 .setDefaults(Notification.DEFAULT_VIBRATE).setAutoCancel(true);
 
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

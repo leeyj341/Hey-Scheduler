@@ -59,6 +59,8 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
     CalendarDay selectedDate;
     List<Integer> colorList;
 
+    CalendarDay lastMemoryDay;
+
     public MainCalendarFragment() {
         // Required empty public constructor
     }
@@ -89,7 +91,17 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
     @Override
     public void onResume() {
         super.onResume();
+        if(lastMemoryDay == null) return;
+        CalendarDay date = CalendarDay.today();
+        String startDate = date.getYear() + "/" + date.getMonth() + "/01";
+        String endDate = date.getYear() + "/" + date.getMonth() + "/" + getLastDayOfMonth(date);
+        new CalendarSimulator().execute(startDate, endDate);
+        startDate = date.getYear() + "/" + date.getMonth() + "/" + lastMemoryDay.getDay();
+        materialCalendarView.setSelectedDate(lastMemoryDay);
+        new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
     }
+
+
 
     public void setCalendar(View view) {
         materialCalendarView = view.findViewById(R.id.main_calendar);
@@ -170,7 +182,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
             materialCalendarView.setSelectedDate(date.getDate());
         }
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
-
+        lastMemoryDay = date;
     }
 
     @Override
@@ -178,6 +190,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
         String startDate = date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
         Log.d("test", startDate);
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
+        lastMemoryDay = date;
     }
 
     class CalendarSimulator extends AsyncTask<String, Void, List<CalendarDay>> {

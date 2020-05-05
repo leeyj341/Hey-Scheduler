@@ -56,6 +56,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
             android:ems="10"
             android:cursorVisible="false"
             android:textSize="20dp"
@@ -74,6 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/end"
+
             android:gravity="center_vertical"
             android:textSize="20dp"/>
 
@@ -82,6 +85,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginLeft="20dp"
+            android:gravity="center_vertical"
             android:cursorVisible="false"
             android:ems="10"
             android:textSize="20dp" />

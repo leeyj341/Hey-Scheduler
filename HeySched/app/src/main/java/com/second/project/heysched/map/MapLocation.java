@@ -18,6 +18,10 @@ public class MapLocation {
     String[] permission_list;
     LocationManager locationManager;
 
+    public MapLocation(Context context) {
+        this.context = context;
+    }
+
     public MapLocation(Context context, String[] permission_list) {
         this.context = context;
         this.permission_list = permission_list;

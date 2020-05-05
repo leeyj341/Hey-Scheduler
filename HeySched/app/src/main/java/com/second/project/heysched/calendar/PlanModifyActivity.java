@@ -1,13 +1,13 @@
-package com.second.project.heysched.plan;
+package com.second.project.heysched.calendar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -21,14 +21,20 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.second.project.heysched.R;
+import com.second.project.heysched.calendar.adapter.PlanItem;
+import com.second.project.heysched.map.MapLocation;
+import com.second.project.heysched.plan.AddPlanActivity;
+import com.second.project.heysched.plan.SearchPlaceActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class AddPlanActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class PlanModifyActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     // views
     EditText plan_title;
     ImageView color_picker;
@@ -42,9 +48,13 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     Button find_friend;
     TextView plan_friends;
     EditText memo;
+    Button ok;
+    Button cancle;
 
-    // intent code
-    public static final int SEARCH_LOCATION_BTN=1000;
+    // 수정 관련
+    String plan_no;
+    String newColor;
+    PlanItem planItem;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -63,7 +73,8 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_friends = findViewById(R.id.plan_friends);
         //find_friend = findViewById(R.id.find_friends);
         memo = findViewById(R.id.memo);
-
+        ok = findViewById(R.id.ok);
+        cancle = findViewById(R.id.cancle);
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
         plan_start_time.setShowSoftInputOnFocus(false);
@@ -87,6 +98,61 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
         // 친구 초대
 
+
+        //수정하기
+        getPlanDetailIntent();
+        Modify();
+
+    }
+
+    //수정을 위한 데이터 가져옴
+    public void getPlanDetailIntent() {
+        Intent intent = getIntent();
+        planItem = intent.getParcelableExtra("planItem");
+        plan_no = planItem.getPlan_no();
+        plan_title.setText(planItem.getTitle());
+        color_picker.setColorFilter(Color.parseColor(planItem.getColor()));
+        StringTokenizer stk = new StringTokenizer(planItem.getStartdatetime());
+        String date = stk.nextToken();
+        String time = stk.nextToken();
+        plan_start_date.setText(date.replaceAll("-", "/"));
+        plan_start_time.setText(time);
+        stk = new StringTokenizer(planItem.getEnddatetime());
+        date = stk.nextToken();
+        time = stk.nextToken();
+        plan_end_date.setText(date.replaceAll("-", "/"));
+        plan_end_time.setText(time);
+        plan_location.setText(planItem.getLocation());
+        memo.setText(planItem.getContent());
+        ok.setText("수정하기");
+    }
+
+    public void setPlanDetailItem(PlanItem item) {
+        item.setPlan_no(plan_no);
+        item.setTitle(plan_title.getText().toString());
+        item.setColor(newColor);
+        item.setStartdatetime(plan_start_date.getText().toString().replaceAll("/", "-") + " " + plan_start_time.getText().toString());
+        item.setEnddatetime(plan_end_date.getText().toString().replaceAll("/", "-") + " " + plan_end_time.getText().toString());
+        item.setLocation(plan_location.getText().toString());
+        item.setContent(memo.getText().toString());
+        MapLocation mapLocation = new MapLocation(this);
+        LatLng location = mapLocation.getLatLngFromAddress(plan_location.getText().toString());
+        item.setLoc_x(location.latitude + "");
+        item.setLoc_y(location.longitude + "");
+    }
+
+    public void Modify() {
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setPlanDetailItem(planItem);
+                new PlanModify().execute(planItem);
+                Intent intent = getIntent();
+                intent.putExtra("returnData", planItem);
+                setResult(RESULT_OK, intent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -97,7 +163,6 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 break;
 
             case R.id.plan_location:
-                Log.d("clickEvent","clicked!");
                 findLocation();
                 break;
 
@@ -109,13 +174,13 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     private void findLocation(){
         //Intent intent = new Intent(getApplicationContext(), SearchLocationActivity.class);
         Intent intent = new Intent(getApplicationContext(), SearchPlaceActivity.class);
-        startActivityForResult(intent, SEARCH_LOCATION_BTN);
+        startActivityForResult(intent, AddPlanActivity.SEARCH_LOCATION_BTN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==SEARCH_LOCATION_BTN){
+        if(requestCode == AddPlanActivity.SEARCH_LOCATION_BTN){
             if(resultCode==RESULT_OK){
                 String place_title = data.getStringExtra("place_title");
                 String place_location = data.getStringExtra("place_location");
@@ -177,15 +242,16 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onChooseColor(int position, int color) {
                         color_picker.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-
-                        // insert용
-                        String sColor = String.format("#%06X", color);
+                        newColor = String.format("#%06X", color);
                     }
 
                     @Override
                     public void onCancel() {
                         // Cancel 버튼 클릭 시 이벤트
                     }
+
+
+
                 }).show();  // dialog 생성
     }
 
@@ -286,26 +352,8 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void timeCheck() {
-        if ((!plan_start_time.getText().equals("")) && plan_start_time.getText().length() > 0) {
-            String[] start = plan_start_time.getText().toString().split(":");
-            String[] end = plan_end_time.getText().toString().split(":");
-
-            if (Integer.parseInt(start[0]) > Integer.parseInt(end[0])) {
-                int time = Integer.parseInt(end[0]) - 1;
-                plan_start_time.setText(time + ":" + start[1]);
-            }
-        }
-    }
-
     private void hideKeyboard() {
         imm.hideSoftInputFromWindow(plan_start_date.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(plan_end_date.getWindowToken(), 0);
     }
-
-
 }
-
-
-
-

@@ -26,4 +26,9 @@ public class CalendarServiceImpl implements CalendarService {
 	public PlanVO selectPlanDetail(String plan_no) {
 		return dao.selectPlanDetail(plan_no);
 	}
+	
+	@Override
+	public int updatePlanDetail(PlanVO planItem) {
+		return dao.updatePlanDetail(planItem);
+	}
 }
