@@ -10,8 +10,9 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.second.project.heysched.MainActivity;
 import com.second.project.heysched.R;
+import com.second.project.heysched.calendar.PlanDetailIncludeWeatherActivity;
+import com.second.project.heysched.calendar.adapter.PlanItem;
 
 public class AlarmReceiver extends BroadcastReceiver {
     final int REQUEST_CODE = 102;
@@ -22,11 +23,14 @@ public class AlarmReceiver extends BroadcastReceiver {
         String day = intent.getStringExtra("day");
         String hour = intent.getStringExtra("hour");
         String minute = intent.getStringExtra("minute");
+        PlanItem planItem = intent.getParcelableExtra("planItem");
 
         Log.d("test", "나는 리시버 아하하하하하");
 
-        Intent alarmIntent = new Intent(context, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent alarmIntent = new Intent(context, PlanDetailIncludeWeatherActivity.class);
+        alarmIntent.putExtra("planItem", planItem);
+        int requestCode = Integer.parseInt(month+day+hour+minute+Math.random());
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, requestCode, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"noti_plan")
                 .setSmallIcon(R.drawable.ic_icon)
@@ -43,6 +47,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         noti.flags = Notification.FLAG_AUTO_CANCEL;
         Log.d("test", "dpdodjwjfurfhkrenuwkcimqjn::::::::::::::::::::::::");
 
-        manager.notify(Integer.valueOf(month+day+hour+minute), noti);
+        manager.notify(requestCode, noti);
     }
 }

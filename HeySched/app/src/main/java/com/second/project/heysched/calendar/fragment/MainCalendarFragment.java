@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -78,7 +79,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
         setView(view);
         setCalendar(view);
         String endDate = getYear() + "/" + getMonth() + "/" + getLastDayOfMonth(CalendarDay.today());
-        new CalendarSimulator().execute(getYear() + "/" + getMonth() + "/0" + 1, endDate);
+        new CalendarSimulator().execute(getYear() + "/" + getMonth() + "/01", endDate);
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(getYear() + "/" + getMonth() + "/" + getToday());
     }
 
@@ -211,9 +212,12 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 /*Log.d("test", date[0]);
                 Log.d("test", date[1]);*/
 
-                url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/select.do");
+                url = new URL("http://172.20.10.11:8088/heyScheduler/calendar/select.do");
 
-                OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .retryOnConnectionFailure(true)
+                        .build();
                 String calendarInfo = json.toString();
 
                 Request request = new Request.Builder()

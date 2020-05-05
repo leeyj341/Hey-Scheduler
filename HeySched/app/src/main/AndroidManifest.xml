@@ -4,9 +4,8 @@
     <!-- 지도 관련 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <!-- 알림 -->
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 알림 -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
@@ -18,24 +17,29 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".calendar.PlanModifyActivity"></activity>
+        <activity android:name=".calendar.PlanDetailIncludeWeatherActivity"></activity>
+        <activity android:name=".calendar.PlanModifyActivity" />
         <activity android:name=".FCM.FCMActivity" />
         <activity
             android:name=".plan.SearchLocationActivity"
             android:label="@string/title_activity_search_location"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".dbtest.DBTestActivity" />
 
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity android:name=".plan.PlanDetailActivity" />
-        <activity android:name=".alarm.AlarmActivity"/>
-        <activity android:name=".plan.InviteFriendActivity"></activity>
-        <activity android:name=".plan.PlaceAutocompleteActivity"></activity>
-        <activity android:name=".plan.AddPlanActivity"></activity>
+        <activity android:name=".alarm.AlarmActivity" />
+        <activity android:name=".plan.InviteFriendActivity" />
+        <activity android:name=".plan.PlaceAutocompleteActivity" />
+        <activity android:name=".plan.AddPlanActivity" />
         <activity android:name=".map.MapActivity" />
         <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" /> <!-- 채팅 -->
@@ -57,31 +61,31 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="${googleMapApiKey}" />
-
+            android:value="${googleMapApiKey}" /> <!-- ================================================================================= -->
         <service
             android:name=".chatting.MyFirebaseMessagingService"
-            android:exported="false">
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".alarm.NotificationService"
+        <service
+            android:name=".alarm.NotificationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
         </service>
 
-        <receiver android:name=".alarm.AlarmReceiver"
+        <receiver
+            android:name=".alarm.AlarmReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.project.heysched.ALARM_START" />
             </intent-filter>
         </receiver>
-
     </application>
 
 </manifest>
