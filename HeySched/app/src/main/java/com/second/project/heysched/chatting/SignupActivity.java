@@ -33,14 +33,15 @@ import com.second.project.heysched.chatting.model.Usermodel;
 public class SignupActivity extends AppCompatActivity {
 
     /*
-    * 아직 안한것 사진 등록 안했을때 기본 이미지 설정할 수 있도록 해야해
-    *
-    * */
+     * 아직 안한것 사진 등록 안했을때 기본 이미지 설정할 수 있도록 해야해
+     *
+     * */
 
     private static final int PICK_FROM_ALBUM = 10;
     private EditText email;
     private EditText name;
     private EditText password;
+    private EditText address_sign;
     private Button signup;
     private String splash_background;
     private ImageView profile;
@@ -57,7 +58,7 @@ public class SignupActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor(splash_background));
         }
-        
+
         profile=findViewById(R.id.signupActivity_imageview_profile);
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +68,11 @@ public class SignupActivity extends AppCompatActivity {
                 startActivityForResult(intent,PICK_FROM_ALBUM); //
             }
         });
-        
+
         email=findViewById(R.id.signupActivity_edittext_email);
         name=findViewById(R.id.signupActivity_edittext_name);
         password=findViewById(R.id.signupActivity_edittext_password);
+        address_sign=findViewById(R.id.signupActivity_edittext_address);
         signup=findViewById(R.id.signupActivity_button_signup);
 
 
@@ -80,7 +82,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(email.getText().toString()==null || name.getText().toString()==null || password.getText().toString()==null||imageUri==null){
+                if(email.getText().toString()==null || name.getText().toString()==null || password.getText().toString()==null||imageUri==null|| address_sign.getText().toString()==null){
 
                     return;
                 }
@@ -112,6 +114,7 @@ public class SignupActivity extends AppCompatActivity {
                                         userModel.userName=name.getText().toString();
                                         userModel.profileImageUrl=imageUrl.getResult().toString();
                                         userModel.uid=FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                        userModel.address=address_sign.getText().toString();
 
 
                                         FirebaseDatabase.getInstance().getReference().child("users").child(uid).setValue(userModel).addOnSuccessListener(new OnSuccessListener<Void>() {
