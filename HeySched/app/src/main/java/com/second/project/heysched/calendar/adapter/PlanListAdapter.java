@@ -17,12 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.second.project.heysched.R;
 import com.second.project.heysched.plan.PlanDetailActivity;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.MediaType;
@@ -110,6 +112,16 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                             Log.d("test", result);
                             JSONObject planDetail = new JSONObject(result);
                             if(planDetail.getString("plan_no") != null) {
+                                ArrayList<String> list = null;
+                                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                                    JSONArray array = planDetail.getJSONArray("guest_ids");
+                                    list = new ArrayList<String>();
+                                    for (int i = 0; i < array.length(); i++) {
+                                        list.add(array.getString(i));
+                                    }
+                                    Log.d("test", list.size() +"");
+                                }
+
                                 planItem = new PlanItem(planDetail.getString("plan_no"),
                                         planDetail.getString("title"),
                                         planDetail.getString("startdatetime"),
@@ -119,7 +131,8 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                                         planDetail.getString("location"),
                                         planDetail.getString("enddatetime"),
                                         planDetail.getString("color"),
-                                        planDetail.getString("host_id")
+                                        planDetail.getString("host_id"),
+                                        list
                                 );
                             }
 
@@ -137,6 +150,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     protected void onPostExecute(PlanItem planItem) {
                         super.onPostExecute(planItem);
                         if(planItem == null) return;
+                        Log.d("test", planItem.toString());
                         Intent intent = new Intent(context, PlanDetailActivity.class);
                         intent.putExtra("planVO", planItem);
                         context.startActivity(intent);
