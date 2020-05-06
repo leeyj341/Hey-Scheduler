@@ -25,4 +25,13 @@
 				location = #{location}, enddatetime = to_date(#{enddatetime}, 'YYYY-MM-DD HH24:MI:SS'), color = #{color}, host_id = #{host_id}
 			where plan_no = #{plan_no}
 	</update>
+	<insert id="insertPlan" parameterType="plan">
+		insert into plan values(plan_seq.nextVal, #{title}, #{startdatetime}, #{loc_x},#{loc_Y}, #{content}, #{location}, #{enddatetime}, #{color}, #{host_id})
+	</insert>
+	<insert id="insertGuest" parameterType="java.util.List">
+		insert into guest(plan_id, guest_id) values
+		<foreach item="item" index="index" collection = "list">
+			(plan_seq.curVal, #{guest_id})
+		</foreach>
+	</insert>
 </mapper>

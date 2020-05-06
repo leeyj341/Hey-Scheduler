@@ -1,5 +1,6 @@
 package com.project.heyScheduler.calendar;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -29,5 +30,17 @@ public class CalendarDAOImpl implements CalendarDAO {
 	@Override
 	public int updatePlanDetail(PlanVO planItem) {
 		return session.update("com.project.heyScheduler.calendar.updatePlanDetail", planItem);
+	}
+
+	@Override
+	public int insertPlan(PlanVO planItem) {
+		session.insert("com.project.heyScheduler.calendar.insertPlan", planItem);
+		/*List<GuestVO> guestlist = new ArrayList<GuestVO>();
+		for(int i = 0; i<planItem.getGuest_ids().size();i++){
+			GuestVO guest = new GuestVO(planItem.getPlan_no(), planItem.getGuest_ids().get(i)); 
+			guestlist.add(guest);
+		}*/
+		session.insert("com.project.heyScheduler.calendar.insertGuest", planItem.getGuest_ids());
+		return 0;
 	}
 }

@@ -1,5 +1,7 @@
 package com.project.heyScheduler.calendar;
 
+import java.util.ArrayList;
+
 public class PlanVO {
 	private String plan_no;
 	private String title;
@@ -11,6 +13,7 @@ public class PlanVO {
 	private String enddatetime;
 	private String color;
 	private String host_id;
+	private ArrayList<String> guest_ids;
 	
 	public PlanVO() {
 		// TODO Auto-generated constructor stub
@@ -120,6 +123,15 @@ public class PlanVO {
 
 	public void setHost_id(String host_id) {
 		this.host_id = host_id;
+	}
+	
+
+	public ArrayList<String> getGuest_ids() {
+		return guest_ids;
+	}
+
+	public void setGuest_ids(ArrayList<String> guest_ids) {
+		this.guest_ids = guest_ids;
 	}
 
 	@Override

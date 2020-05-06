@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias type="com.project.heyScheduler.member.MemberVO" alias="member"/>
 		<typeAlias type="com.project.heyScheduler.calendar.PlanVO" alias="plan"/>
+		<typeAlias type="com.project.heyScheduler.calendar.GuestVO" alias="guest"/>
 	</typeAliases>
 	
 	<mappers>
