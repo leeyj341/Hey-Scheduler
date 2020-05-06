@@ -36,7 +36,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".plan.PlanDetailActivity" />
-        <activity android:name=".alarm.AlarmActivity" />
+        <activity android:name=".alarm.AlarmActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        
         <activity android:name=".plan.InviteFriendActivity" />
         <activity android:name=".plan.PlaceAutocompleteActivity" />
         <activity android:name=".plan.AddPlanActivity" />
@@ -44,11 +52,12 @@
         <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" /> <!-- 채팅 -->
         <activity android:name=".chatting.SplashActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity android:name=".chatting.LoginActivity" />
         <activity
@@ -69,19 +78,17 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <service
+<!--        <service
             android:name=".alarm.NotificationService"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
             </intent-filter>
-        </service>
+        </service>-->
 
         <receiver
-            android:name=".alarm.AlarmReceiver"
-            android:enabled="true"
-            android:exported="true">
+            android:name=".alarm.AlarmReceiver">
             <intent-filter>
                 <action android:name="com.project.heysched.ALARM_START" />
             </intent-filter>

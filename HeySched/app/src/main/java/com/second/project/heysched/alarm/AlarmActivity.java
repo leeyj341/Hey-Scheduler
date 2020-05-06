@@ -4,7 +4,6 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,15 +30,15 @@ public class AlarmActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String sDate = "2020-05-06 03:50:00";
+                String sDate = "2020-05-06 09:33:00";
                 PlanItem planItem = new PlanItem("1",
                         "발표한다",
-                        "2020-05-06 03:50:00",
+                        "2020-05-06 12:25:00",
                         "37.5006789",
                         "127.03524589999999",
                         "수정완료",
                         "스타벅스 역삼역점",
-                        "2020-05-06 04:00:00",
+                        "2020-05-06 14:00:00",
                         "#FFCE93D8",
                         FirebaseAuth.getInstance().getCurrentUser().getUid());
 
@@ -49,37 +48,38 @@ public class AlarmActivity extends AppCompatActivity {
                 SimpleDateFormat hourFormat = new SimpleDateFormat("HH");
                 SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
 
+                String month = null;
+                String day = null;
+                String hour = null;
+                String minute = null;
                 Date date = null;
+                int id = 0;
                 try {
-                    date = df .parse(sDate);
-                    Log.d("test",date + "");
+                    date = df.parse(sDate);
+                    Log.d("test", date + "");
+                    month = monthFormat.format(date);
+                    day = dayFormat.format(date);
+                    hour = hourFormat.format(date);
+                    minute = minuteFormat.format(date);
+
+                    Intent intent = new Intent(AlarmActivity.this, AlarmReceiver.class){};
+                    Log.d("test", intent + "");
+                    intent.putExtra("month", "month");
+                    intent.putExtra("day", day);
+                    intent.putExtra("hour", hour);
+                    intent.putExtra("minute", minute);
+                    intent.putExtra("planItem", planItem);
+
+                    id = Integer.valueOf(month+day+hour+minute);
+
+                    PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                    manager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
-                String month = monthFormat.format(date);
-                String day = dayFormat.format(date);
-                String hour = hourFormat.format(date);
-                String minute = minuteFormat.format(date);
 
-                Intent intent = new Intent(AlarmActivity.this, AlarmReceiver.class);
-                intent.putExtra("month", month);
-                intent.putExtra("day", day);
-                intent.putExtra("hour", hour);
-                intent.putExtra("minute", minute);
-                intent.putExtra("planItem", planItem);
-                int id = Integer.valueOf(month+day+hour+minute);
-
-
-                PendingIntent pendingIntent = PendingIntent.getBroadcast(AlarmActivity.this, id, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-                AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    manager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
-                } else if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                    manager.setExact(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
-                } else {
-                    manager.set(AlarmManager.RTC_WAKEUP, date.getTime(), pendingIntent);
-                }
 
                 //JobScheduler.Start(AlarmActivity.this);
             }

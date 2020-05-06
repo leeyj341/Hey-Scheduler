@@ -212,7 +212,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 /*Log.d("test", date[0]);
                 Log.d("test", date[1]);*/
 
-                url = new URL("http://172.20.10.11:8088/heyScheduler/calendar/select.do");
+                url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/select.do");
 
                 OkHttpClient client = new OkHttpClient.Builder()
                         .readTimeout(30, TimeUnit.SECONDS)

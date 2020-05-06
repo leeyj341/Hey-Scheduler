@@ -68,7 +68,7 @@ public class PlanModifyActivity extends AppCompatActivity implements View.OnClic
         plan_start_time = findViewById(R.id.plan_start_time);
         plan_end_date = findViewById(R.id.plan_end_date);
         plan_end_time = findViewById(R.id.plan_end_time);
-        //plan_location = findViewById(R.id.plan_location);
+        plan_location = findViewById(R.id.plan_location);
         //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
         //find_friend = findViewById(R.id.find_friends);
