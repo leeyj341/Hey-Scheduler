@@ -238,6 +238,7 @@ public class PlanModifyActivity extends AppCompatActivity implements View.OnClic
 
     private void inviteFriends(){
         Intent intent = new Intent(getApplicationContext(), InviteFriendActivity.class);
+
         startActivityForResult(intent, INVITE_FRIENDS_BTN);
     }
 

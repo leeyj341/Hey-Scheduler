@@ -47,10 +47,10 @@ public class PlanDetailActivity extends AppCompatActivity {
         this.enddatetime.setText(planItem.getEnddatetime());
         Log.d("test", planItem.getGuest_id().size() + "");
         this.friends.setText("");
-        for (int i = 0; i < planItem.getGuest_id().size(); i++) {
+        /*for (int i = 0; i < planItem.getGuest_id().size(); i++) {
             Log.d("test", planItem.getGuest_id().get(i));
             this.friends.append(planItem.getGuest_id().get(i));
-        }
+        }*/
         this.location.setText(planItem.getLocation());
         this.content.setText(planItem.getContent());
 

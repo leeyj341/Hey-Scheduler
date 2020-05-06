@@ -172,7 +172,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
                 mapLocation = new MapLocation(MapActivity.this, permission_list);
             }
             //Log.d("test", mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898") + "");
-            String path = getPath(mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898"),
+            String path = getPath(mapLocation.getMyLocation(),
                     mapLocation.getLatLngFromAddress(location),
                     System.currentTimeMillis() / 1000);
             BufferedReader in = null;

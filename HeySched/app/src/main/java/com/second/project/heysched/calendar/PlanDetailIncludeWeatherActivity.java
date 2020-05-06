@@ -1,6 +1,7 @@
 package com.second.project.heysched.calendar;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +13,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.second.project.heysched.R;
 import com.second.project.heysched.calendar.adapter.PlanItem;
 import com.second.project.heysched.map.MapActivity;
+
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import okhttp3.OkHttpClient;
 
 public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implements View.OnClickListener {
     public static final int PLAN_DETAIL_INCLUDE_WEATHER = 3001;
@@ -32,12 +38,15 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
         setViews();
 
         Intent receiveIntent = getIntent();
-        planItem = receiveIntent.getParcelableExtra("planItem");
-        address = receiveIntent.getStringExtra("address");
+        if(receiveIntent != null) {
+            planItem = receiveIntent.getParcelableExtra("planItem");
+            address = receiveIntent.getStringExtra("address");
 
-        title.setText(planItem.getTitle());
-        location.setText(planItem.getLocation());
-        content.setText(planItem.getContent());
+            title.setText(planItem.getTitle());
+            location.setText(planItem.getLocation());
+            content.setText(planItem.getContent());
+        }
+
         //friends.setText(planItem.);
 
     }
@@ -71,6 +80,24 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
             if(resultCode == RESULT_OK) {
 
             }
+        }
+    }
+
+    class RecentPlanAsync extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String currentTime = strings[0];
+            try {
+                URL url = new URL("http://70.12.230.57:8088/heyScheduler/selectOne.do");
+                OkHttpClient client = new OkHttpClient();
+
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            return null;
         }
     }
 }

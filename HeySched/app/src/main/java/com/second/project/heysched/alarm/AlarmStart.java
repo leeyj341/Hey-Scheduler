@@ -117,7 +117,7 @@ public class AlarmStart {
 
             Intent intent = new Intent("com.project.heysched.ALARM_START");
             Log.d("test", intent + "");
-            intent.putExtra("month", "month");
+            intent.putExtra("month", month);
             intent.putExtra("day", day);
             intent.putExtra("hour", hour);
             intent.putExtra("minute", minute);
