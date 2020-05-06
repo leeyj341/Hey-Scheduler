@@ -123,9 +123,22 @@ public class SearchPlaceActivity extends AppCompatActivity implements View.OnCli
             case R.id.search_btn:
                 search();
                 break;
+            case R.id.recommand_place_title:
+                selectRecommand();
+                break;
         }
     }
+    private void selectRecommand(){
+        Intent intent = getIntent();
+        intent.putExtra("place_title", recommand_place_title.getText().toString());
+        intent.putExtra("place_location", recommand_place_location.getText().toString());
+        //intent.putExtra("place_hash", item.place_hash);
 
+        setResult(RESULT_OK, intent);
+
+        finish();
+
+    }
     private void search() {
         Log.d("jsoup", "search method works");
         String search_words = search_view.getText().toString();
