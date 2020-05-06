@@ -31,6 +31,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Intent alarmIntent = new Intent(context, PlanDetailIncludeWeatherActivity.class);
         alarmIntent.putExtra("planItem", planItem);
+        alarmIntent.putExtra("address", intent.getStringExtra("address"));
         //int requestCode = Integer.valueOf(month + day + hour + minute + Math.random());
         PendingIntent pendingIntent = PendingIntent.getActivity(context, REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 

@@ -150,14 +150,6 @@ public class PlanVO {
 		this.guest_ids = guest_ids;
 	}
 
-	public ArrayList<String> getGuest_ids() {
-		return guest_ids;
-	}
-
-	public void setGuest_ids(ArrayList<String> guest_ids) {
-		this.guest_ids = guest_ids;
-	}
-
 	@Override
 	public String toString() {
 		return "PlanVO [plan_no=" + plan_no + ", title=" + title + ", startdatetime=" + startdatetime + ", loc_x="

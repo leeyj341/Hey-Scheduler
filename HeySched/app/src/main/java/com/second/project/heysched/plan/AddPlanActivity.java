@@ -29,8 +29,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.second.project.heysched.R;
+import com.second.project.heysched.alarm.AlarmStart;
 import com.second.project.heysched.calendar.adapter.PlanItem;
+import com.second.project.heysched.chatting.model.Usermodel;
 import com.second.project.heysched.plan.adapter.InvitedProfileAdapter;
 
 import java.util.ArrayList;
@@ -70,13 +77,15 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     public static final int SEARCH_LOCATION_BTN=1000;
     public static final int INVITE_FRIENDS_BTN=2000;
 
+    String addr="";
+
     InvitedProfileAdapter adapter;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_plan);
-
+        FirebaseUser myuid=FirebaseAuth.getInstance().getCurrentUser();
 
 
         plan_title = findViewById(R.id.plan_title);
@@ -144,7 +153,18 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 Log.d("plz...","An error occurred: " + status);
             }
         });*/
+        FirebaseDatabase.getInstance().getReference().child("users").child(myuid.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Usermodel me=dataSnapshot.getValue(Usermodel.class);
+                addr = me.address;
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -184,11 +204,22 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan.setColor(sColor);
         plan.setGuest_id(guest_ids);
         plan.setHost_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        new PlanInsert().execute(plan);
+        //new PlanInsert().execute(plan);
+
+        //알람 등록
+        setAlarm(startdatetime, plan);
 
         Log.d("insertToSTS","AddPlanActivity done");
         finish();
     }
+
+    public void setAlarm(String startdatetime, PlanItem item) {
+        if(addr.equals("")) return;
+        Log.d("test", addr);
+        Log.d("test", item.toString());
+        new AlarmStart(this).set(startdatetime, item, addr);
+    }
+
     private void inviteFriends(){
         Intent intent = new Intent(getApplicationContext(),InviteFriendActivity.class);
         startActivityForResult(intent, INVITE_FRIENDS_BTN);

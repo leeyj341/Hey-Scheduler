@@ -44,12 +44,12 @@
 		delete from guest where plan_no = #{plan_no}
 	</delete>
 	<insert id="insertPlan" parameterType="plan">
-		insert into plan values(plan_seq.nextVal, #{title}, #{startdatetime}, #{loc_x},#{loc_Y}, #{content}, #{location}, #{enddatetime}, #{color}, #{host_id})
+		insert into plan values(plan_seq.nextVal, #{title}, to_date(#{startdatetime}, 'YYYY-MM-DD HH24:MI:SS'), #{loc_x},#{loc_y}, #{content}, #{location}, to_date(#{enddatetime}, 'YYYY-MM-DD HH24:MI:SS'), #{color}, #{host_id})
 	</insert>
 	<insert id="insertGuest" parameterType="java.util.List">
-		insert into guest(plan_id, guest_id) values
+		insert into guest(plan_id, member_id) values
 		<foreach item="item" index="index" collection = "list">
-			(plan_seq.curVal, #{guest_id})
+			(plan_seq.curVal, #{item})
 		</foreach>
 	</insert>
 </mapper>

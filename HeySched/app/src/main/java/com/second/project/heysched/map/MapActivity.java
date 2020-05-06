@@ -58,8 +58,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
     //검색 기준 데이터
     long arrivalTime;
-    String latitude;
-    String longitude;
+    String location;
+    String myAddress;
 
     //레이아웃
     LinearLayout container;
@@ -77,15 +77,15 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         Intent intent = getIntent();
         String sArrivalTime = intent.getStringExtra("arrivalTime");
-        latitude = intent.getStringExtra("latitude");
-        longitude = intent.getStringExtra("longitude");
-        Log.d("test", latitude);
+        location = intent.getStringExtra("location");
+        myAddress = intent.getStringExtra("address");
+        Log.d("test", location);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
         try {
             date = df.parse(sArrivalTime);
-            arrivalTime = date.getTime() / 1000;
+            arrivalTime = date.getTime();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -168,10 +168,13 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
 
         @Override
         protected JSONObject doInBackground(Void... voids) {
-            if(mapLocation == null )
+            if(mapLocation == null ) {
                 mapLocation = new MapLocation(MapActivity.this, permission_list);
+            }
             //Log.d("test", mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898") + "");
-            String path = getPath(mapLocation.getMyLocation(), new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)), arrivalTime);
+            String path = getPath(mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898"),
+                    mapLocation.getLatLngFromAddress(location),
+                    System.currentTimeMillis() / 1000);
             BufferedReader in = null;
             StringBuffer sb = null;
             JSONObject json = null;
@@ -207,7 +210,12 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         @Override
         protected void onPostExecute(JSONObject json) {
             super.onPostExecute(json);
+            if(json == null) {
+                Log.d("test", "null이다아아아아아");
+                return;
+            }
             try {
+                Log.d("test", json.toString());
                 JSONArray legs = json.getJSONArray("routes")
                         .getJSONObject(0)
                         .getJSONArray("legs");

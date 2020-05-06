@@ -23,6 +23,8 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
     Button navigationButton;
     PlanItem planItem;
 
+    String address;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,7 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
 
         Intent receiveIntent = getIntent();
         planItem = receiveIntent.getParcelableExtra("planItem");
+        address = receiveIntent.getStringExtra("address");
 
         title.setText(planItem.getTitle());
         location.setText(planItem.getLocation());
@@ -45,6 +48,7 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
         content = findViewById(R.id.plan_content);
         friends = findViewById(R.id.plan_friends);
         navigationButton = findViewById(R.id.navigation);
+        navigationButton.setOnClickListener(this);
     }
 
     @Override
@@ -53,8 +57,8 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
         if(id == R.id.navigation) {
             Intent intent = new Intent(this, MapActivity.class);
             intent.putExtra("arrivalTime", planItem.getStartdatetime());
-            intent.putExtra("latitude", planItem.getLoc_x());
-            intent.putExtra("longitude", planItem.getLoc_y());
+            intent.putExtra("location", planItem.getLocation());
+            intent.putExtra("address", address);
             startActivityForResult(intent, PLAN_DETAIL_INCLUDE_WEATHER);
             finish();
         }

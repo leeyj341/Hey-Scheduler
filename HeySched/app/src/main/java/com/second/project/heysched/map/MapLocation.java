@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
+import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -52,6 +53,7 @@ public class MapLocation {
         Geocoder geocoder = new Geocoder(context);
         List<Address> list = null;
         try {
+            Log.d("test", address);
             list = geocoder.getFromLocationName(address, 10);
         } catch (IOException e) {
             e.printStackTrace();
