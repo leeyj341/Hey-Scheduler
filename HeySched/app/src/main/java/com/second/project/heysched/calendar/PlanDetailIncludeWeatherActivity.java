@@ -32,6 +32,11 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
         Intent receiveIntent = getIntent();
         planItem = receiveIntent.getParcelableExtra("planItem");
 
+        title.setText(planItem.getTitle());
+        location.setText(planItem.getLocation());
+        content.setText(planItem.getContent());
+        //friends.setText(planItem.);
+
     }
 
     public void setViews() {
