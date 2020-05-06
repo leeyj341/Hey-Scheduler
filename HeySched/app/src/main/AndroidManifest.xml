@@ -42,7 +42,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+        
         <activity android:name=".plan.InviteFriendActivity" />
         <activity android:name=".plan.PlaceAutocompleteActivity" />
         <activity android:name=".plan.AddPlanActivity" />
@@ -50,6 +52,12 @@
         <activity android:name=".chatting.ChatActivity" />
         <activity android:name=".plan.SearchPlaceActivity" /> <!-- 채팅 -->
         <activity android:name=".chatting.SplashActivity" >
+
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
         </activity>
         <activity android:name=".chatting.LoginActivity" />
         <activity

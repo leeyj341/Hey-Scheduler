@@ -7,4 +7,5 @@ public interface CalendarService {
 	public List<PlanVO> selectPlansOnDay(PlanVO vo);
 	public PlanVO selectPlanDetail(String plan_no);
 	public int updatePlanDetail(PlanVO planItem);
+	public int insertPlan(PlanVO vo);
 }

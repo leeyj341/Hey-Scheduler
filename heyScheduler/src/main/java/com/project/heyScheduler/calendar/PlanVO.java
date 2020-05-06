@@ -140,6 +140,15 @@ public class PlanVO {
 	public void setHost_id(String host_id) {
 		this.host_id = host_id;
 	}
+	
+
+	public ArrayList<String> getGuest_ids() {
+		return guest_ids;
+	}
+
+	public void setGuest_ids(ArrayList<String> guest_ids) {
+		this.guest_ids = guest_ids;
+	}
 
 	public ArrayList<String> getGuest_ids() {
 		return guest_ids;

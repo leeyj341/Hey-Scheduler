@@ -31,4 +31,10 @@ public class CalendarServiceImpl implements CalendarService {
 	public int updatePlanDetail(PlanVO planItem) {
 		return dao.updatePlanDetail(planItem);
 	}
+
+	@Override
+	public int insertPlan(PlanVO vo) {
+		return dao.insertPlan(vo);
+	}
+	
 }

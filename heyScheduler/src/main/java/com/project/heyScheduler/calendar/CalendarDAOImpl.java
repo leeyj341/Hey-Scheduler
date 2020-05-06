@@ -43,4 +43,16 @@ public class CalendarDAOImpl implements CalendarDAO {
 		//session.update("com.project.heyScheduler.calendar.updateGuests", map);
 		return session.update("com.project.heyScheduler.calendar.updatePlanDetail", planItem);
 	}
+
+	@Override
+	public int insertPlan(PlanVO planItem) {
+		session.insert("com.project.heyScheduler.calendar.insertPlan", planItem);
+		/*List<GuestVO> guestlist = new ArrayList<GuestVO>();
+		for(int i = 0; i<planItem.getGuest_ids().size();i++){
+			GuestVO guest = new GuestVO(planItem.getPlan_no(), planItem.getGuest_ids().get(i)); 
+			guestlist.add(guest);
+		}*/
+		session.insert("com.project.heyScheduler.calendar.insertGuest", planItem.getGuest_ids());
+		return 0;
+	}
 }

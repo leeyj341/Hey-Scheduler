@@ -43,4 +43,13 @@
 	<delete id="deleteGuests" parameterType="String">
 		delete from guest where plan_no = #{plan_no}
 	</delete>
+	<insert id="insertPlan" parameterType="plan">
+		insert into plan values(plan_seq.nextVal, #{title}, #{startdatetime}, #{loc_x},#{loc_Y}, #{content}, #{location}, #{enddatetime}, #{color}, #{host_id})
+	</insert>
+	<insert id="insertGuest" parameterType="java.util.List">
+		insert into guest(plan_id, guest_id) values
+		<foreach item="item" index="index" collection = "list">
+			(plan_seq.curVal, #{guest_id})
+		</foreach>
+	</insert>
 </mapper>
