@@ -3,6 +3,8 @@ package com.second.project.heysched.calendar.adapter;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 public class PlanItem implements Parcelable {
     String plan_no;
     String title;
@@ -14,6 +16,7 @@ public class PlanItem implements Parcelable {
     String enddatetime;
     String color;
     String host_id;
+    ArrayList<String> guest_id;
 
     public PlanItem(){}
     public PlanItem(String plan_no, String title, String content, String color) {
@@ -174,5 +177,13 @@ public class PlanItem implements Parcelable {
 
     public void setHost_id(String host_id) {
         this.host_id = host_id;
+    }
+
+    public ArrayList<String> getGuest_id() {
+        return guest_id;
+    }
+
+    public void setGuest_id(ArrayList<String> guest_id) {
+        this.guest_id = guest_id;
     }
 }

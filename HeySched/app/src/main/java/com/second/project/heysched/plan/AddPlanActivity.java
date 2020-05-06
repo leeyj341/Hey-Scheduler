@@ -68,8 +68,14 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     RecyclerView invited_img_layout;
     LayoutInflater inflater;
 
+    Button ok_btn;
+    Button cancle_btn;
+
     String sColor="#F15F5F";
     String place_location="";
+    String startdatetime="";
+    String enddatetime="";
+    ArrayList<String> guest_id;
 
     // data model
     PlanItem plan;
@@ -100,6 +106,11 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         invited_img_layout = findViewById(R.id.invited_img_layout);
         memo = findViewById(R.id.memo);
 
+        // 확인
+        ok_btn = findViewById(R.id.ok);
+        // 취소
+        cancle_btn = findViewById(R.id.cancle);
+
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
         plan_start_time.setShowSoftInputOnFocus(false);
@@ -126,6 +137,9 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         // 친구 초대
         plan_friends.setOnClickListener(this);
 
+
+        ok_btn.setOnClickListener(this);
+        cancle_btn.setOnClickListener(this);
 
         /*PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
 
@@ -173,15 +187,20 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     }
 
     private void save(){
+        Log.d("insertToSTS","AddPlanActivity save");
         //db에 저장
         plan = new PlanItem();
         plan.setTitle(plan_title.getText().toString());
-        //plan.setStartdatetime();
-        //plan.setEnddatetime();
+        plan.setStartdatetime(startdatetime);
+        plan.setEnddatetime(enddatetime);
         plan.setLocation(place_location);
         plan.setContent(memo.getText().toString());
         plan.setColor(sColor);
+        plan.setGuest_id(guest_id);
         plan.setHost_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        new PlanInsert().execute(plan);
+
+        Log.d("insertToSTS","AddPlanActivity done");
         finish();
     }
     private void inviteFriends(){
@@ -214,13 +233,15 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                     //체크한 친구들 화면에 추가
                     ArrayList<String> user_uids = data.getStringArrayListExtra("invited_user_ids");
                     ArrayList<String> user_imgs = data.getStringArrayListExtra("invited_user_imgs");
-
                     invited_img_layout.removeAllViews();
                     // Log!! return data check!
                     for(int i =0;i<user_uids.size();i++){
                         Log.d("invited_friends","uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i));
                         Toast.makeText(this, "uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i),Toast.LENGTH_SHORT).show();
                     }
+                    guest_id = user_uids;
+
+                    // 초대한 친구 프로필 화면에 뿌리기
                     adapter = new InvitedProfileAdapter(this, R.layout.invited_imgview, user_imgs);
 
                     LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
@@ -237,7 +258,6 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                     });
 
 
-                    // 친구 프로필 화면에 뿌리기
 
                 }
                 break;
@@ -316,18 +336,19 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        String strDate = String.valueOf(year) + "/";
-                        strDate += String.valueOf(monthOfYear + 1) + "/";
+                        String strDate = String.valueOf(year) + "-";
+                        strDate += String.valueOf(monthOfYear + 1) + "-";
                         strDate += String.valueOf(dayOfMonth);
 
                         v.setText(strDate);
 
-
                         switch (v.getId()) {
                             case R.id.plan_start_date:
+                                startdatetime=strDate;
                                 plan_start_time.requestFocus();
                                 break;
                             case R.id.plan_end_date:
+                                enddatetime=strDate;
                                 plan_end_time.requestFocus();
                                 break;
                         }
@@ -367,6 +388,12 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 strTime += min;
                 v.setText(strTime);
+                switch (v.getId()){
+                    case R.id.plan_start_time:
+                        startdatetime+=" "+strTime;
+                    case R.id.plan_end_time:
+                        enddatetime+=" "+strTime;
+                }
             }
         };
 
