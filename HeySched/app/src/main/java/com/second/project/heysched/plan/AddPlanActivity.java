@@ -1,11 +1,5 @@
 package com.second.project.heysched.plan;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
@@ -23,28 +17,20 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.second.project.heysched.R;
 import com.second.project.heysched.calendar.adapter.PlanItem;
-import com.second.project.heysched.chatting.model.Usermodel;
 import com.second.project.heysched.plan.adapter.InvitedProfileAdapter;
 
 import java.util.ArrayList;
@@ -75,7 +61,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     String place_location="";
     String startdatetime="";
     String enddatetime="";
-    ArrayList<String> guest_id;
+    ArrayList<String> guest_ids;
 
     // data model
     PlanItem plan;
@@ -196,7 +182,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan.setLocation(place_location);
         plan.setContent(memo.getText().toString());
         plan.setColor(sColor);
-        plan.setGuest_id(guest_id);
+        plan.setGuest_id(guest_ids);
         plan.setHost_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
         new PlanInsert().execute(plan);
 
@@ -239,7 +225,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                         Log.d("invited_friends","uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i));
                         Toast.makeText(this, "uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i),Toast.LENGTH_SHORT).show();
                     }
-                    guest_id = user_uids;
+                    guest_ids = user_uids;
 
                     // 초대한 친구 프로필 화면에 뿌리기
                     adapter = new InvitedProfileAdapter(this, R.layout.invited_imgview, user_imgs);

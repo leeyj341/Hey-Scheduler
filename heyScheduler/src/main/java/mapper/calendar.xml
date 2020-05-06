@@ -19,10 +19,28 @@
 			select * from plan where plan_no = #{plan_no}
 		]]>
 	</select>
+	<select id="selectGuests" parameterType="String" resultType="String">
+		<![CDATA[
+			select * from guest where plan_no = #{plan_no}
+		]]>
+	</select>
 	<update id="updatePlanDetail" parameterType="plan">
 		update plan
 			set title = #{title}, startdatetime = to_date(#{startdatetime}, 'YYYY-MM-DD HH24:MI:SS'), loc_x = #{loc_x}, loc_y = #{loc_y}, content = #{content},
 				location = #{location}, enddatetime = to_date(#{enddatetime}, 'YYYY-MM-DD HH24:MI:SS'), color = #{color}, host_id = #{host_id}
 			where plan_no = #{plan_no}
 	</update>
+	<update id="updateGuests" parameterType="Map">
+		<foreach item="item" index="index" collection="list" open="DECLARE BEGIN" close="; END;" separator=";">
+			update guest set member_id = #{item} where member_id = #{item} and plan_no = #{plan_no}
+		</foreach>
+	</update>
+	<insert id="insertGuests" parameterType="Map">
+		<foreach item="item" index="index" collection="list" open="DECLARE BEGIN" close="; END;" separator=";">
+			insert into guest values(#{item}, #{plan_no})
+		</foreach>
+	</insert>
+	<delete id="deleteGuests" parameterType="String">
+		delete from guest where plan_no = #{plan_no}
+	</delete>
 </mapper>

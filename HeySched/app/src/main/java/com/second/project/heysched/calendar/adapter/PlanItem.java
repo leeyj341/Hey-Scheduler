@@ -16,7 +16,7 @@ public class PlanItem implements Parcelable {
     String enddatetime;
     String color;
     String host_id;
-    ArrayList<String> guest_id;
+    ArrayList<String> guest_ids;
 
     public PlanItem(){}
     public PlanItem(String plan_no, String title, String content, String color) {
@@ -39,6 +39,20 @@ public class PlanItem implements Parcelable {
         this.host_id = host_id;
     }
 
+    public PlanItem(String plan_no, String title, String startdatetime, String loc_x, String loc_y, String content, String location, String enddatetime, String color, String host_id, ArrayList<String> guest_ids) {
+        this.plan_no = plan_no;
+        this.title = title;
+        this.startdatetime = startdatetime;
+        this.loc_x = loc_x;
+        this.loc_y = loc_y;
+        this.content = content;
+        this.location = location;
+        this.enddatetime = enddatetime;
+        this.color = color;
+        this.host_id = host_id;
+        this.guest_ids = guest_ids;
+    }
+
     public PlanItem(Parcel in) {
         plan_no = in.readString();
         title = in.readString();
@@ -49,7 +63,9 @@ public class PlanItem implements Parcelable {
         location = in.readString();
         enddatetime = in.readString();
         color = in.readString();
-        host_id = in. readString();
+        host_id = in.readString();
+        guest_ids = in.readArrayList(PlanItem.class.getClassLoader());
+
     }
 
     public static final Creator<PlanItem> CREATOR = new Creator<PlanItem>() {
@@ -77,6 +93,7 @@ public class PlanItem implements Parcelable {
                 ", enddatetime='" + enddatetime + '\'' +
                 ", color='" + color + '\'' +
                 ", host_id='" + host_id + '\'' +
+                ", guest_ids=" + guest_ids +
                 '}';
     }
 
@@ -97,6 +114,8 @@ public class PlanItem implements Parcelable {
         dest.writeString(enddatetime);
         dest.writeString(color);
         dest.writeString(host_id);
+        if(guest_ids.size() > 0)
+            dest.writeList(guest_ids);
     }
 
     public String getPlan_no() {
@@ -180,10 +199,10 @@ public class PlanItem implements Parcelable {
     }
 
     public ArrayList<String> getGuest_id() {
-        return guest_id;
+        return guest_ids;
     }
 
     public void setGuest_id(ArrayList<String> guest_id) {
-        this.guest_id = guest_id;
+        this.guest_ids = guest_id;
     }
 }

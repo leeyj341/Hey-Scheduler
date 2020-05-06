@@ -62,13 +62,14 @@ public class AlarmActivity extends AppCompatActivity {
                     hour = hourFormat.format(date);
                     minute = minuteFormat.format(date);
 
-                    Intent intent = new Intent(AlarmActivity.this, AlarmReceiver.class){};
+                    Intent intent = new Intent("com.project.heysched.ALARM_START");
                     Log.d("test", intent + "");
                     intent.putExtra("month", "month");
                     intent.putExtra("day", day);
                     intent.putExtra("hour", hour);
                     intent.putExtra("minute", minute);
                     intent.putExtra("planItem", planItem);
+                    new AlarmReceiver().onReceive(AlarmActivity.this, intent);
 
                     id = Integer.valueOf(month+day+hour+minute);
 

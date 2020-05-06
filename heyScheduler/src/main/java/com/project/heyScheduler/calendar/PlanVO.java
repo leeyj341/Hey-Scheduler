@@ -1,5 +1,7 @@
 package com.project.heyScheduler.calendar;
 
+import java.util.ArrayList;
+
 public class PlanVO {
 	private String plan_no;
 	private String title;
@@ -11,6 +13,7 @@ public class PlanVO {
 	private String enddatetime;
 	private String color;
 	private String host_id;
+	private ArrayList<String> guest_ids;
 	
 	public PlanVO() {
 		// TODO Auto-generated constructor stub
@@ -40,6 +43,22 @@ public class PlanVO {
 		this.enddatetime = enddatetime;
 		this.color = color;
 		this.host_id = host_id;
+	}
+
+	public PlanVO(String plan_no, String title, String startdatetime, String loc_x, String loc_y, String content,
+			String location, String enddatetime, String color, String host_id, ArrayList<String> guest_ids) {
+		super();
+		this.plan_no = plan_no;
+		this.title = title;
+		this.startdatetime = startdatetime;
+		this.loc_x = loc_x;
+		this.loc_y = loc_y;
+		this.content = content;
+		this.location = location;
+		this.enddatetime = enddatetime;
+		this.color = color;
+		this.host_id = host_id;
+		this.guest_ids = guest_ids;
 	}
 
 	public String getPlan_no() {
@@ -122,12 +141,21 @@ public class PlanVO {
 		this.host_id = host_id;
 	}
 
+	public ArrayList<String> getGuest_ids() {
+		return guest_ids;
+	}
+
+	public void setGuest_ids(ArrayList<String> guest_ids) {
+		this.guest_ids = guest_ids;
+	}
+
 	@Override
 	public String toString() {
 		return "PlanVO [plan_no=" + plan_no + ", title=" + title + ", startdatetime=" + startdatetime + ", loc_x="
 				+ loc_x + ", loc_y=" + loc_y + ", content=" + content + ", location=" + location + ", enddatetime="
-				+ enddatetime + ", color=" + color + ", host_id=" + host_id + "]";
+				+ enddatetime + ", color=" + color + ", host_id=" + host_id + ", guest_ids=" + guest_ids + "]";
 	}
+
 	
 	
 }
