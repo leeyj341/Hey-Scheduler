@@ -130,6 +130,7 @@ public class CalendarController {
 		String json = "";
 		try {
 			PlanVO planItem = mapper.readValue(planData, PlanVO.class);
+			System.out.println(planItem);
 			int resultInt = service.updatePlanDetail(planItem);
 			String result = "";
 			if(resultInt == 1) {

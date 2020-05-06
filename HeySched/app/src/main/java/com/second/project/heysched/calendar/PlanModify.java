@@ -1,6 +1,7 @@
 package com.second.project.heysched.calendar;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.second.project.heysched.calendar.adapter.PlanItem;
@@ -22,6 +23,7 @@ public class PlanModify extends AsyncTask<PlanItem, Void, String> {
         try {
             URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/modify.do");
             Gson gson = new Gson();
+            Log.d("test", planItems[0].toString());
             String json = gson.toJson(planItems[0]);
 
             OkHttpClient client = new OkHttpClient();

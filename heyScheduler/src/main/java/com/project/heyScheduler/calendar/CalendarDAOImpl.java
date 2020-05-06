@@ -1,7 +1,9 @@
 package com.project.heyScheduler.calendar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,21 @@ public class CalendarDAOImpl implements CalendarDAO {
 	
 	@Override
 	public PlanVO selectPlanDetail(String plan_no) {
-		return session.selectOne("com.project.heyScheduler.calendar.selectPlanDetail", plan_no);
+		List<String> guest_ids = session.selectList("com.project.heyScheduler.calendar.selectGuests", plan_no);
+		PlanVO vo = session.selectOne("com.project.heyScheduler.calendar.selectPlanDetail", plan_no);
+		vo.setGuest_ids((ArrayList<String>)guest_ids);
+		return vo;
 	}
 	
 	@Override
 	public int updatePlanDetail(PlanVO planItem) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("plan_no", planItem.getPlan_no());
+		map.put("list", planItem.getGuest_ids());
+		String plan_no = planItem.getPlan_no();
+		session.delete("com.project.heyScheduler.calendar.deleteGuests", plan_no);
+		session.insert("com.project.heyScheduler.calendar.insertGuests", map);
+		//session.update("com.project.heyScheduler.calendar.updateGuests", map);
 		return session.update("com.project.heyScheduler.calendar.updatePlanDetail", planItem);
 	}
 
