@@ -23,6 +23,6 @@ public class DetailCalendarFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail_calendar, container, false);
+        return inflater.inflate(R.layout.plan_detail, container, false);
     }
 }

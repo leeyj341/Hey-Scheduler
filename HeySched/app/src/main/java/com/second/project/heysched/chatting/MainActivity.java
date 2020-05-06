@@ -32,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_chatting);
 
+        getFragmentManager().beginTransaction().replace(R.id.mainactivity_framelayout,new PeopleFragment()).commit();
+
         drawerLayout = findViewById(R.id.main_drawer);
         navigationView = findViewById(R.id.main_drawer_nav);
         selectActivity();
