@@ -22,7 +22,7 @@ public class PlanInsert extends AsyncTask<PlanItem, Void, String> {
     protected String doInBackground(PlanItem... planItems) {
         String result = "";
         try {
-            URL url = new URL("http://172.20.10.11:8088/heyScheduler/calendar/insert.do");
+            URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/insert.do");
             Gson gson = new Gson();
             String json = gson.toJson(planItems[0]);
             Log.d("insertToSTS",planItems[0].getTitle());
