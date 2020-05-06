@@ -15,7 +15,7 @@ import com.second.project.heysched.calendar.PlanDetailIncludeWeatherActivity;
 import com.second.project.heysched.calendar.adapter.PlanItem;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    final int REQUEST_CODE = 102;
+    public static final int REQUEST_CODE = 102;
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent alarmIntent = new Intent(context, PlanDetailIncludeWeatherActivity.class);
         alarmIntent.putExtra("planItem", planItem);
         //int requestCode = Integer.valueOf(month + day + hour + minute + Math.random());
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, (int)System.currentTimeMillis(), alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, REQUEST_CODE, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,"noti_plan")
                 .setSmallIcon(R.drawable.ic_icon)
@@ -47,6 +47,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         noti.flags = Notification.FLAG_AUTO_CANCEL;
         Log.d("test", "dpdodjwjfurfhkrenuwkcimqjn::::::::::::::::::::::::");
 
-        manager.notify((int)System.currentTimeMillis(), noti);
+        manager.notify(REQUEST_CODE, noti);
     }
 }
