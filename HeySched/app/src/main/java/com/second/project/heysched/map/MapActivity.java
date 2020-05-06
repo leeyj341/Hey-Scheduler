@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -78,6 +79,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         String sArrivalTime = intent.getStringExtra("arrivalTime");
         latitude = intent.getStringExtra("latitude");
         longitude = intent.getStringExtra("longitude");
+        Log.d("test", latitude);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
