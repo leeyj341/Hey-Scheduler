@@ -2,6 +2,7 @@ package com.second.project.heysched.chatting;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
@@ -68,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectActivity() {
+        Log.d("navigationdetect",        navigationView.getId()+"");
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

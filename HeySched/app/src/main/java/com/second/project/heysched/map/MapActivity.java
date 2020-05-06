@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,8 +39,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,7 +55,11 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
     String[] permission_list = {Manifest.permission.ACCESS_FINE_LOCATION,
                                 Manifest.permission.ACCESS_COARSE_LOCATION};
     MapLocation mapLocation;
+
+    //검색 기준 데이터
     long arrivalTime;
+    String latitude;
+    String longitude;
 
     //레이아웃
     LinearLayout container;
@@ -70,9 +76,19 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         setView();
 
         Intent intent = getIntent();
+        String sArrivalTime = intent.getStringExtra("arrivalTime");
+        latitude = intent.getStringExtra("latitude");
+        longitude = intent.getStringExtra("longitude");
+        Log.d("test", latitude);
 
-        Date currentTime = Calendar.getInstance().getTime();
-        arrivalTime = currentTime.getTime() / 1000;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = df.parse(sArrivalTime);
+            arrivalTime = date.getTime() / 1000;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         checkPermissions(permission_list);
     }
@@ -155,7 +171,7 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
             if(mapLocation == null )
                 mapLocation = new MapLocation(MapActivity.this, permission_list);
             //Log.d("test", mapLocation.getLatLngFromAddress("경기도 수원시 장안구 조원동 898") + "");
-            String path = getPath(mapLocation.getMyLocation(), new LatLng(37.3027264,127.0065257), arrivalTime);
+            String path = getPath(mapLocation.getMyLocation(), new LatLng(Double.parseDouble(latitude),Double.parseDouble(longitude)), arrivalTime);
             BufferedReader in = null;
             StringBuffer sb = null;
             JSONObject json = null;

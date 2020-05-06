@@ -40,6 +40,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.StringTokenizer;
+import java.util.concurrent.TimeUnit;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -59,6 +60,8 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
     CalendarDay selectedDate;
     List<Integer> colorList;
 
+    CalendarDay lastMemoryDay;
+
     public MainCalendarFragment() {
         // Required empty public constructor
     }
@@ -76,7 +79,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
         setView(view);
         setCalendar(view);
         String endDate = getYear() + "/" + getMonth() + "/" + getLastDayOfMonth(CalendarDay.today());
-        new CalendarSimulator().execute(getYear() + "/" + getMonth() + "/0" + 1, endDate);
+        new CalendarSimulator().execute(getYear() + "/" + getMonth() + "/01", endDate);
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(getYear() + "/" + getMonth() + "/" + getToday());
     }
 
@@ -89,7 +92,17 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
     @Override
     public void onResume() {
         super.onResume();
+        if(lastMemoryDay == null) return;
+        CalendarDay date = CalendarDay.today();
+        String startDate = date.getYear() + "/" + date.getMonth() + "/01";
+        String endDate = date.getYear() + "/" + date.getMonth() + "/" + getLastDayOfMonth(date);
+        new CalendarSimulator().execute(startDate, endDate);
+        startDate = date.getYear() + "/" + date.getMonth() + "/" + lastMemoryDay.getDay();
+        materialCalendarView.setSelectedDate(lastMemoryDay);
+        new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
     }
+
+
 
     public void setCalendar(View view) {
         materialCalendarView = view.findViewById(R.id.main_calendar);
@@ -170,7 +183,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
             materialCalendarView.setSelectedDate(date.getDate());
         }
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
-
+        lastMemoryDay = date;
     }
 
     @Override
@@ -178,6 +191,7 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
         String startDate = date.getYear() + "/" + date.getMonth() + "/" + date.getDay();
         Log.d("test", startDate);
         new PlanTask(getActivity(), R.layout.plan_row, recyclerView).execute(startDate);
+        lastMemoryDay = date;
     }
 
     class CalendarSimulator extends AsyncTask<String, Void, List<CalendarDay>> {
@@ -198,9 +212,12 @@ public class MainCalendarFragment extends Fragment implements OnMonthChangedList
                 /*Log.d("test", date[0]);
                 Log.d("test", date[1]);*/
 
-                url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/select.do");
+                url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/select.do");
 
-                OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .readTimeout(30, TimeUnit.SECONDS)
+                        .retryOnConnectionFailure(true)
+                        .build();
                 String calendarInfo = json.toString();
 
                 Request request = new Request.Builder()

@@ -1,58 +1,40 @@
-package com.second.project.heysched.plan;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentTransaction;
+package com.second.project.heysched.calendar;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
-import com.google.android.gms.location.places.ui.SupportPlaceAutocompleteFragment;
-import com.google.firebase.auth.FirebaseAuth;
+import com.google.android.gms.maps.model.LatLng;
 import com.second.project.heysched.R;
 import com.second.project.heysched.calendar.adapter.PlanItem;
-import com.second.project.heysched.chatting.model.Usermodel;
-import com.second.project.heysched.plan.adapter.InvitedProfileAdapter;
+import com.second.project.heysched.map.MapLocation;
+import com.second.project.heysched.plan.AddPlanActivity;
+import com.second.project.heysched.plan.SearchPlaceActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.StringTokenizer;
 
 import petrov.kristiyan.colorpicker.ColorPicker;
 
-public class AddPlanActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
+public class PlanModifyActivity extends AppCompatActivity implements View.OnClickListener, View.OnFocusChangeListener {
     // views
     EditText plan_title;
     ImageView color_picker;
@@ -60,38 +42,25 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
     EditText plan_start_time;
     EditText plan_end_date;
     EditText plan_end_time;
+    TextView plan_location;
+    Button find_location;
     InputMethodManager imm;
+    Button find_friend;
     TextView plan_friends;
     EditText memo;
-    ImageView recommand_btn;
-    TextView plan_location;
-    RecyclerView invited_img_layout;
-    LayoutInflater inflater;
+    Button ok;
+    Button cancle;
 
-    Button ok_btn;
-    Button cancle_btn;
+    // 수정 관련
+    String plan_no;
+    String newColor;
+    PlanItem planItem;
 
-    String sColor="#F15F5F";
-    String place_location="";
-    String startdatetime="";
-    String enddatetime="";
-    ArrayList<String> guest_id;
-
-    // data model
-    PlanItem plan;
-
-    // intent code
-    public static final int SEARCH_LOCATION_BTN=1000;
-    public static final int INVITE_FRIENDS_BTN=2000;
-
-    InvitedProfileAdapter adapter;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_plan);
-
-
 
         plan_title = findViewById(R.id.plan_title);
         color_picker = findViewById(R.id.color_picker);
@@ -99,31 +68,24 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_start_time = findViewById(R.id.plan_start_time);
         plan_end_date = findViewById(R.id.plan_end_date);
         plan_end_time = findViewById(R.id.plan_end_time);
-        recommand_btn = findViewById(R.id.recommand_btn);
         plan_location = findViewById(R.id.plan_location);
         //find_location = findViewById(R.id.find_location);
         plan_friends = findViewById(R.id.plan_friends);
-        invited_img_layout = findViewById(R.id.invited_img_layout);
+        //find_friend = findViewById(R.id.find_friends);
         memo = findViewById(R.id.memo);
-
-        // 확인
-        ok_btn = findViewById(R.id.ok);
-        // 취소
-        cancle_btn = findViewById(R.id.cancle);
-
+        ok = findViewById(R.id.ok);
+        cancle = findViewById(R.id.cancle);
         plan_start_date.setShowSoftInputOnFocus(false);
         plan_end_date.setShowSoftInputOnFocus(false);
         plan_start_time.setShowSoftInputOnFocus(false);
         plan_end_time.setShowSoftInputOnFocus(false);
-
-        //친구 초대시 사진 보여주기
-        inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         // 색
         color_picker.setOnClickListener(this);
 
         // 날짜 선택시 키보드 없어지게
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
 
         // 날짜 다이얼로그 띄우기
         plan_start_date.setOnFocusChangeListener(this);
@@ -132,33 +94,65 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan_end_time.setOnFocusChangeListener(this);
 
         // 장소 찾기
-        recommand_btn.setOnClickListener(this);
+        plan_location.setOnClickListener(this);
 
         // 친구 초대
-        plan_friends.setOnClickListener(this);
 
 
-        ok_btn.setOnClickListener(this);
-        cancle_btn.setOnClickListener(this);
+        //수정하기
+        getPlanDetailIntent();
+        Modify();
 
-        /*PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment)
+    }
 
-                getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment1);
+    //수정을 위한 데이터 가져옴
+    public void getPlanDetailIntent() {
+        Intent intent = getIntent();
+        planItem = intent.getParcelableExtra("planItem");
+        plan_no = planItem.getPlan_no();
+        plan_title.setText(planItem.getTitle());
+        color_picker.setColorFilter(Color.parseColor(planItem.getColor()));
+        StringTokenizer stk = new StringTokenizer(planItem.getStartdatetime());
+        String date = stk.nextToken();
+        String time = stk.nextToken();
+        plan_start_date.setText(date.replaceAll("-", "/"));
+        plan_start_time.setText(time);
+        stk = new StringTokenizer(planItem.getEnddatetime());
+        date = stk.nextToken();
+        time = stk.nextToken();
+        plan_end_date.setText(date.replaceAll("-", "/"));
+        plan_end_time.setText(time);
+        plan_location.setText(planItem.getLocation());
+        memo.setText(planItem.getContent());
+        ok.setText("수정하기");
+    }
 
-        autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+    public void setPlanDetailItem(PlanItem item) {
+        item.setPlan_no(plan_no);
+        item.setTitle(plan_title.getText().toString());
+        item.setColor(newColor);
+        item.setStartdatetime(plan_start_date.getText().toString().replaceAll("/", "-") + " " + plan_start_time.getText().toString());
+        item.setEnddatetime(plan_end_date.getText().toString().replaceAll("/", "-") + " " + plan_end_time.getText().toString());
+        item.setLocation(plan_location.getText().toString());
+        item.setContent(memo.getText().toString());
+        MapLocation mapLocation = new MapLocation(this);
+        LatLng location = mapLocation.getLatLngFromAddress(plan_location.getText().toString());
+        item.setLoc_x(location.latitude + "");
+        item.setLoc_y(location.longitude + "");
+    }
+
+    public void Modify() {
+        ok.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onPlaceSelected(Place place) {
-                // TODO: Get info about the selected place.
-                Log.d("plz...","Place: " + place.getName());
+            public void onClick(View v) {
+                setPlanDetailItem(planItem);
+                new PlanModify().execute(planItem);
+                Intent intent = getIntent();
+                intent.putExtra("returnData", planItem);
+                setResult(RESULT_OK, intent);
+                finish();
             }
-
-            @Override
-            public void onError(Status status) {
-                // TODO: Handle the error.
-                Log.d("plz...","An error occurred: " + status);
-            }
-        });*/
-
+        });
     }
 
     @Override
@@ -168,99 +162,33 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 openColorPicker();
                 break;
 
-            case R.id.recommand_btn:
-                Log.d("clickEvent","clicked!");
+            /*case R.id.plan_location:
                 findLocation();
-                break;
+                break;*/
 
-            case R.id.plan_friends:
-                inviteFriends();
-                break;
-            case R.id.ok:
-                save();
-                break;
-            case R.id.cancle:
-                finish();
-                break;
-
+            /*case R.id.find_friend:
+                break;*/
         }
-    }
-
-    private void save(){
-        Log.d("insertToSTS","AddPlanActivity save");
-        //db에 저장
-        plan = new PlanItem();
-        plan.setTitle(plan_title.getText().toString());
-        plan.setStartdatetime(startdatetime);
-        plan.setEnddatetime(enddatetime);
-        plan.setLocation(place_location);
-        plan.setContent(memo.getText().toString());
-        plan.setColor(sColor);
-        plan.setGuest_id(guest_id);
-        plan.setHost_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        new PlanInsert().execute(plan);
-
-        Log.d("insertToSTS","AddPlanActivity done");
-        finish();
-    }
-    private void inviteFriends(){
-        Intent intent = new Intent(getApplicationContext(),InviteFriendActivity.class);
-        startActivityForResult(intent, INVITE_FRIENDS_BTN);
     }
 
     private void findLocation(){
         //Intent intent = new Intent(getApplicationContext(), SearchLocationActivity.class);
         Intent intent = new Intent(getApplicationContext(), SearchPlaceActivity.class);
-        startActivityForResult(intent, SEARCH_LOCATION_BTN);
+        startActivityForResult(intent, AddPlanActivity.SEARCH_LOCATION_BTN);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode){
-            // 선택한 장소 받기
-            case SEARCH_LOCATION_BTN:
-                if(resultCode==RESULT_OK){
-                    String place_title = data.getStringExtra("place_title");
-                    place_location = data.getStringExtra("place_location");
-
-                    plan_location.setText(place_title);
-                }
-                break;
-            // 선택한 친구목록 받기
-            case INVITE_FRIENDS_BTN:
-                if(resultCode==RESULT_OK){
-                    //체크한 친구들 화면에 추가
-                    ArrayList<String> user_uids = data.getStringArrayListExtra("invited_user_ids");
-                    ArrayList<String> user_imgs = data.getStringArrayListExtra("invited_user_imgs");
-                    invited_img_layout.removeAllViews();
-                    // Log!! return data check!
-                    for(int i =0;i<user_uids.size();i++){
-                        Log.d("invited_friends","uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i));
-                        Toast.makeText(this, "uid : "+ user_uids.get(i)+"  profile : "+user_imgs.get(i),Toast.LENGTH_SHORT).show();
-                    }
-                    guest_id = user_uids;
-
-                    // 초대한 친구 프로필 화면에 뿌리기
-                    adapter = new InvitedProfileAdapter(this, R.layout.invited_imgview, user_imgs);
-
-                    LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-                    llm.setOrientation(RecyclerView.HORIZONTAL);
-                    invited_img_layout.setLayoutManager(llm);
-                    invited_img_layout.setAdapter(adapter);
-                    invited_img_layout.addItemDecoration(new RecyclerView.ItemDecoration() {
-                        @Override
-                        public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                            super.getItemOffsets(outRect, view, parent, state);
-                            outRect.right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getApplicationContext().getResources().getDisplayMetrics());
-                            outRect.left = 0;
-                        }
-                    });
+        if(requestCode == AddPlanActivity.SEARCH_LOCATION_BTN){
+            if(resultCode==RESULT_OK){
+                String place_title = data.getStringExtra("place_title");
+                String place_location = data.getStringExtra("place_location");
+                plan_location.setText(place_title);
 
 
 
-                }
-                break;
+            }
         }
     }
 
@@ -314,15 +242,16 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                     @Override
                     public void onChooseColor(int position, int color) {
                         color_picker.setColorFilter(color, PorterDuff.Mode.SRC_IN);
-
-                        // insert용
-                        sColor = String.format("#%06X", color);
+                        newColor = String.format("#%06X", color);
                     }
 
                     @Override
                     public void onCancel() {
                         // Cancel 버튼 클릭 시 이벤트
                     }
+
+
+
                 }).show();  // dialog 생성
     }
 
@@ -336,19 +265,18 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 new DatePickerDialog.OnDateSetListener() {
                     public void onDateSet(DatePicker view, int year, int monthOfYear,
                                           int dayOfMonth) {
-                        String strDate = String.valueOf(year) + "-";
-                        strDate += String.valueOf(monthOfYear + 1) + "-";
+                        String strDate = String.valueOf(year) + "/";
+                        strDate += String.valueOf(monthOfYear + 1) + "/";
                         strDate += String.valueOf(dayOfMonth);
 
                         v.setText(strDate);
 
+
                         switch (v.getId()) {
                             case R.id.plan_start_date:
-                                startdatetime=strDate;
                                 plan_start_time.requestFocus();
                                 break;
                             case R.id.plan_end_date:
-                                enddatetime=strDate;
                                 plan_end_time.requestFocus();
                                 break;
                         }
@@ -388,12 +316,6 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
                 }
                 strTime += min;
                 v.setText(strTime);
-                switch (v.getId()){
-                    case R.id.plan_start_time:
-                        startdatetime+=" "+strTime;
-                    case R.id.plan_end_time:
-                        enddatetime+=" "+strTime;
-                }
             }
         };
 
@@ -430,21 +352,8 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
 
     }
 
-    private void timeCheck() {
-        if ((!plan_start_time.getText().equals("")) && plan_start_time.getText().length() > 0) {
-            String[] start = plan_start_time.getText().toString().split(":");
-            String[] end = plan_end_time.getText().toString().split(":");
-
-            if (Integer.parseInt(start[0]) > Integer.parseInt(end[0])) {
-                int time = Integer.parseInt(end[0]) - 1;
-                plan_start_time.setText(time + ":" + start[1]);
-            }
-        }
-    }
-
     private void hideKeyboard() {
         imm.hideSoftInputFromWindow(plan_start_date.getWindowToken(), 0);
         imm.hideSoftInputFromWindow(plan_end_date.getWindowToken(), 0);
     }
-
 }

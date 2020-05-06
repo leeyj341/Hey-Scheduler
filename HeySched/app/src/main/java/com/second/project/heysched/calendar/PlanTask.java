@@ -41,7 +41,7 @@ public class PlanTask extends AsyncTask<String, Void, List<PlanItem>> {
         List<PlanItem> list = new ArrayList<PlanItem>();
 
         try {
-            URL url = new URL("http://172.30.1.46:8088/heyScheduler/calendar/selectPlansOnDay.do");
+            URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/selectPlansOnDay.do");
             JSONObject object = new JSONObject();
             String result = "";
 
