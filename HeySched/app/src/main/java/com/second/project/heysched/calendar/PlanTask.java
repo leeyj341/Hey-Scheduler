@@ -41,11 +41,12 @@ public class PlanTask extends AsyncTask<String, Void, List<PlanItem>> {
         List<PlanItem> list = new ArrayList<PlanItem>();
 
         try {
-            URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/selectPlansOnDay.do");
+            URL url = new URL("http://70.12.116.62:8088/heyScheduler/calendar/selectPlansOnDay.do");
             JSONObject object = new JSONObject();
             String result = "";
 
             object.put("startdatetime", values[0]);
+            object.put("host_id", values[1]);
 
             OkHttpClient client = new OkHttpClient();
             String startDate = object.toString();

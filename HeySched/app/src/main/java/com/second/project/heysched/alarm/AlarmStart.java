@@ -5,7 +5,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
+import android.provider.AlarmClock;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -61,7 +63,8 @@ public class AlarmStart {
             MapLocation mapLocation = new MapLocation(context);
 
             String path = getPath(mapLocation.getLatLngFromAddress(strings[0]),
-                    mapLocation.getLatLngFromAddress(strings[1]), date.getTime());
+                    mapLocation.getLatLngFromAddress(strings[1]), date.getTime() / 1000);
+            Log.d("test",path);
             BufferedReader in;
             StringBuffer sb;
             JSONObject json;
@@ -82,13 +85,13 @@ public class AlarmStart {
                     }
                     //
                     json = new JSONObject(sb.toString());
+                    Log.d("test", json.toString());
                     result = json.getJSONArray("routes")
                             .getJSONObject(0)
                             .getJSONArray("legs")
                             .getJSONObject(0)
                             .getJSONObject("duration")
                             .getInt("value");
-                    Log.d("test", result + "");
                     in.close();
                 }
             } catch (MalformedURLException e) {
@@ -104,6 +107,7 @@ public class AlarmStart {
         @Override
         protected void onPostExecute(Integer time) {
             super.onPostExecute(time);
+            Log.d("test","소요시간: " + time);
             timeToGo = time * 1000;
             SimpleDateFormat monthFormat = new SimpleDateFormat("MM");
             SimpleDateFormat dayFormat = new SimpleDateFormat("dd");
@@ -115,8 +119,7 @@ public class AlarmStart {
             String hour = hourFormat.format(date);
             String minute = minuteFormat.format(date);
 
-            Intent intent = new Intent("com.project.heysched.ALARM_START");
-            Log.d("test", intent + "");
+            Intent intent = new Intent(context, AlarmReceiver.class);
             intent.putExtra("month", month);
             intent.putExtra("day", day);
             intent.putExtra("hour", hour);
@@ -132,11 +135,18 @@ public class AlarmStart {
 
             //테스트
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            /*Date newDate = null;
+            try {
+                newDate = df.parse("2020-05-11 18:30:00");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }*/
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(date.getTime() - timeToGo - 600000);
+            //calendar.setTimeInMillis(newDate.getTime());
             Log.d("test", df.format(calendar.getTime()) +  " ================================================================ ");
 
-            manager.set(AlarmManager.RTC_WAKEUP, date.getTime() - timeToGo - 600000, pendingIntent);
+            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
         }
 
         public String getPath(LatLng origin, LatLng destination, long time) {

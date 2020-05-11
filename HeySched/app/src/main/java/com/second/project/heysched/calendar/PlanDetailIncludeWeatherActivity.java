@@ -89,7 +89,7 @@ public class PlanDetailIncludeWeatherActivity extends AppCompatActivity implemen
         protected String doInBackground(String... strings) {
             String currentTime = strings[0];
             try {
-                URL url = new URL("http://70.12.230.57:8088/heyScheduler/selectOne.do");
+                URL url = new URL("http://70.12.116.62:8088/heyScheduler/selectOne.do");
                 OkHttpClient client = new OkHttpClient();
 
 

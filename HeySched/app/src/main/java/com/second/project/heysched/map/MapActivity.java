@@ -79,7 +79,6 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         String sArrivalTime = intent.getStringExtra("arrivalTime");
         location = intent.getStringExtra("location");
         myAddress = intent.getStringExtra("address");
-        Log.d("test", location);
 
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = null;
@@ -211,11 +210,9 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         protected void onPostExecute(JSONObject json) {
             super.onPostExecute(json);
             if(json == null) {
-                Log.d("test", "null이다아아아아아");
                 return;
             }
             try {
-                Log.d("test", json.toString());
                 JSONArray legs = json.getJSONArray("routes")
                         .getJSONObject(0)
                         .getJSONArray("legs");

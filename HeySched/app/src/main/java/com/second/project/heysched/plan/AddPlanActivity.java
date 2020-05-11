@@ -204,7 +204,7 @@ public class AddPlanActivity extends AppCompatActivity implements View.OnClickLi
         plan.setColor(sColor);
         plan.setGuest_id(guest_ids);
         plan.setHost_id(FirebaseAuth.getInstance().getCurrentUser().getUid());
-        //new PlanInsert().execute(plan);
+        new PlanInsert().execute(plan);
 
         //알람 등록
         setAlarm(startdatetime, plan);

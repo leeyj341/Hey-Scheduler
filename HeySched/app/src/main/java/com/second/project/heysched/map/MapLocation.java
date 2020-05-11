@@ -53,7 +53,6 @@ public class MapLocation {
         Geocoder geocoder = new Geocoder(context);
         List<Address> list = null;
         try {
-            Log.d("test", address);
             list = geocoder.getFromLocationName(address, 10);
         } catch (IOException e) {
             e.printStackTrace();

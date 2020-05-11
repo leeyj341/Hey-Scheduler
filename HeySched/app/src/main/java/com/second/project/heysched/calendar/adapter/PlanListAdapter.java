@@ -93,7 +93,7 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     protected PlanItem doInBackground(String... values) {
                         PlanItem planItem = null;
                         try {
-                            URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/selectPlanDetail.do");
+                            URL url = new URL("http://70.12.116.62:8088/heyScheduler/calendar/selectPlanDetail.do");
                             JSONObject object = new JSONObject();
                             String result = "";
 
@@ -109,7 +109,6 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
 
                             Response response = client.newCall(request).execute();
                             result = response.body().string();
-                            Log.d("test", result);
                             JSONObject planDetail = new JSONObject(result);
                             if(planDetail.getString("plan_no") != null) {
                                 ArrayList<String> list = null;
@@ -119,7 +118,6 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                                     for (int i = 0; i < array.length(); i++) {
                                         list.add(array.getString(i));
                                     }
-                                    Log.d("test", list.size() +"");
                                 }
 
                                 planItem = new PlanItem(planDetail.getString("plan_no"),
@@ -150,7 +148,6 @@ public class PlanListAdapter extends RecyclerView.Adapter<PlanListAdapter.ViewHo
                     protected void onPostExecute(PlanItem planItem) {
                         super.onPostExecute(planItem);
                         if(planItem == null) return;
-                        Log.d("test", planItem.toString());
                         Intent intent = new Intent(context, PlanDetailActivity.class);
                         intent.putExtra("planVO", planItem);
                         context.startActivity(intent);

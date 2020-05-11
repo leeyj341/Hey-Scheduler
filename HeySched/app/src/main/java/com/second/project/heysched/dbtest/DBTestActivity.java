@@ -76,7 +76,6 @@ public class DBTestActivity extends AppCompatActivity {
 
                     OkHttpClient client = new OkHttpClient();
                     String memberInfo = object.toString();
-                    Log.d("test",memberInfo);
                     Request request = new Request.Builder()
                             .url(url)
                             .post(RequestBody.create(MediaType.parse("application/json"),memberInfo))
@@ -84,7 +83,6 @@ public class DBTestActivity extends AppCompatActivity {
 
                     Response response = client.newCall(request).execute();
                     result = response.body().string();
-                    Log.d("test", result);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -100,7 +98,7 @@ public class DBTestActivity extends AppCompatActivity {
                 try {
                     object.put("id", user.id);
                     object.put("pass", user.pass);
-                    url = new URL("http://70.12.230.57:8088/heyScheduler/select.do");
+                    url = new URL("http://70.12.116.62:8088/heyScheduler/select.do");
 
                     OkHttpClient client = new OkHttpClient();
                     String memberInfo = object.toString();
@@ -110,9 +108,7 @@ public class DBTestActivity extends AppCompatActivity {
                             .build();
 
                     Response response = client.newCall(request).execute();
-                    Log.d("test", response.toString());
                     result = response.body().string();
-                    Log.d("test", result);
 
 
                 } catch (JSONException e) {

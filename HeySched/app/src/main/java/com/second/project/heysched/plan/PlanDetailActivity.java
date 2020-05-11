@@ -39,13 +39,11 @@ public class PlanDetailActivity extends AppCompatActivity {
         setViews();
         Intent intent = getIntent();
         planItem = intent.getParcelableExtra("planVO");
-        Log.d("test", planItem.toString());
 
         this.title.setText(planItem.getTitle());
         this.picker.setColorFilter(Color.parseColor(planItem.getColor()));
         this.startdatetime.setText(planItem.getStartdatetime());
         this.enddatetime.setText(planItem.getEnddatetime());
-        Log.d("test", planItem.getGuest_id().size() + "");
         this.friends.setText("");
         /*for (int i = 0; i < planItem.getGuest_id().size(); i++) {
             Log.d("test", planItem.getGuest_id().get(i));

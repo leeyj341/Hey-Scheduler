@@ -21,9 +21,8 @@ public class PlanModify extends AsyncTask<PlanItem, Void, String> {
     protected String doInBackground(PlanItem... planItems) {
         String result = "";
         try {
-            URL url = new URL("http://70.12.230.57:8088/heyScheduler/calendar/modify.do");
+            URL url = new URL("http://70.12.116.62:8088/heyScheduler/calendar/modify.do");
             Gson gson = new Gson();
-            Log.d("test", planItems[0].toString());
             String json = gson.toJson(planItems[0]);
 
             OkHttpClient client = new OkHttpClient();

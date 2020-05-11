@@ -6,12 +6,12 @@
 <mapper namespace="com.project.heyScheduler.calendar">
 	<select id="selectPlans" parameterType="plan" resultType="plan">
 		<![CDATA[
-			select * from plan where startdatetime >= #{startdatetime} and startdatetime <= #{enddatetime} order by startdatetime
+			select * from plan where startdatetime >= #{startdatetime} and startdatetime <= #{enddatetime} and host_id = #{host_id} order by startdatetime
 		]]>
 	</select>
 	<select id="selectPlansOnDay" parameterType="plan" resultType="plan">
 		<![CDATA[
-			select * from plan where startdatetime >= #{startdatetime} and startdatetime < to_date(#{startdatetime}, 'yy-MM-dd') + 1 order by startdatetime
+			select * from plan where startdatetime >= #{startdatetime} and startdatetime < to_date(#{startdatetime}, 'yy-MM-dd') + 1 and host_id = #{host_id} order by startdatetime
 		]]>
 	</select>
 	<select id="selectPlanDetail" parameterType="String" resultType="plan">
